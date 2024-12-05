@@ -1,0 +1,51 @@
+services:
+  next:
+    container_name: mmm-next
+    build:
+      context: ./next
+      dockerfile: Dockerfile.dev
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./next:/app
+      - mmm_node_modules:/app/node_modules
+    environment:
+      - WATCHPACK_POLLING=true
+    command: sh -c "npm run dev"
+
+  fastapi:
+    container_name: mmm-fastapi
+    build:
+      context: ./fastapi
+      dockerfile: Dockerfile.dev
+    ports:
+      - "8080:8080"
+    depends_on:
+      - db
+    volumes:
+      - ./fastapi/app:/app
+
+  db: #ユーザ名：root, パスワード：なし
+    container_name: mmm-db
+    build:
+      context: ./mysql
+      dockerfile: Dockerfile.dev
+    tty: true
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_ALLOW_EMPTY_PASSWORD: 'yes'
+      MYSQL_DATABASE: "mmm_db"
+      TZ: "Asia/Tokyo"
+    volumes:
+      - mmm_mysql:/var/lib/mysql
+
+  phpmyadmin:
+    container_name: mmm-dbconsole
+    image: phpmyadmin:latest
+    ports:
+      - "8081:80"
+  
+volumes:
+  mmm_node_modules:
+  mmm_mysql:
