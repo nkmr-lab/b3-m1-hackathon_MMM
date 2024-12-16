@@ -1,1 +1,1 @@
-A template for development. kaiji
+A template for development. conflict simasuyo
