@@ -7,13 +7,6 @@ const Header = () => {
   const { user } = useAuth();
   const [activeIndex, setActiveIndex] = useState(0);
 
-  const menuItems = [
-    'おすすめ',
-    'マイリスト',
-    'ゲーム・おもちゃ・グッズ',
-    '本・雑誌・漫画',
-  ];
-
   return (
     <header className="bg-white shadow-md">
       <div className="px-4 py-3">
@@ -24,18 +17,28 @@ const Header = () => {
               onClick={() => window.location.href = '/'}
             >
               <BotMessageSquare className="text-gray-600" size={30} />
-              <span className="text-lg font-semibold text-gray-600">LLM Product</span>
-            </div>
-            <div className="relative">
-              <input
-                type="text"
-                placeholder="なにをお探しですか？"
-                className="pl-4 pr-10 py-2 border border-gray-300 rounded-md w-80"
-              />
-              <Search className="absolute right-3 top-2.5 text-gray-400" size={20} />
+              <span className="text-lg font-semibold text-gray-600">ナカノ DE ハイク</span>
             </div>
           </div>
           <div className="flex items-center space-x-4">
+            <button
+              className="text-gray-600"
+              onClick={() => window.location.href = '/create-post'}
+            >
+              投稿する
+            </button>
+            <button
+              className="text-gray-600"
+              onClick={() => window.location.href = '/feed'}
+            >
+              投稿一覧
+            </button>
+            <button
+              className="text-gray-600"
+              onClick={() => window.location.href = '/events'}
+            >
+              イベント
+            </button>
             {user && (<span className="text-sm text-gray-600">ようこそ、{user.displayName}さん</span>)}
             <button
               onClick={() => {
@@ -55,22 +58,6 @@ const Header = () => {
             </button>
           </div>
         </div>
-        <nav className="mt-4 flex justify-center">
-          <ul className="flex space-x-6 text-sm">
-            {menuItems.map((item, index) => (
-              <li
-                key={index}
-                className={`pb-2 cursor-pointer font-bold ${activeIndex === index
-                  ? 'text-mercariRed border-b-2 border-mercariRed'
-                  : 'text-gray-600 hover:text-gray-800'
-                  }`}
-                onClick={() => setActiveIndex(index)}
-              >
-                {item}
-              </li>
-            ))}
-          </ul>
-        </nav>
       </div>
     </header>
   );

@@ -1,7 +1,7 @@
 import time
 from sqlalchemy import create_engine, text
 from sqlalchemy.exc import OperationalError
-from routers.api import Base
+from routers.test import Base
 
 DB_URL = "mysql+pymysql://root@db:3306/mmm_db?charset=utf8"
 engine = create_engine(DB_URL, echo=True)
