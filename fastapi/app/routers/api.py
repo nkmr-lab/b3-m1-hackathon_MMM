@@ -4,6 +4,9 @@ from sqlalchemy.sql import select
 from db import get_db
 from pydantic import BaseModel
 
+from openai import OpenAI
+from dotenv import load_dotenv
+
 # api schema
 class TestProductCreate(BaseModel):
     name: str
@@ -19,6 +22,20 @@ class UserCreate(BaseModel):
 
 # routers
 router = APIRouter()
+
+# GPT test
+load_dotenv()
+client=OpenAI()
+@router.get("/openai")
+async def get_openai():
+    completion = client.chat.completions.create(
+    model="gpt-4o-2024-08-06",
+    messages=[
+        {"role": "user", "content": "Who is Shohei Ohtani?"}
+    ]
+    )
+
+    return {"message": completion.choices[0].message.content}
 
 ## products (test)
 @router.get("/test-products")
