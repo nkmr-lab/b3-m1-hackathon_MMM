@@ -22,7 +22,7 @@ async def get_openai():
     completion = client.chat.completions.create(
         model="gpt-4o-2024-11-20",
         messages=[
-            {"role": "user", "content": "東京都中野区の住民にあまり知られていないスポットを一つ紹介してください"}
+            {"role": "user", "content": "東京都中野区の住民にほとんど知られていないスポットを一つ紹介してください"}
         ]
     )
 
