@@ -23,7 +23,7 @@ async def get_openai():
         # 1回目のプロンプト
         first_prompt = (
             "東京都中野区の住民に，ほとんど知られていない置物やスポットを一つ教えてください．"
-            "ほとんど知られていないことが重要です．そのスポットの名前だけで大丈夫です．"
+            "ほとんど知られていないことが重要です．そのスポットの名前のみを返してください．"
         )
 
         first_completion = client.chat.completions.create(
@@ -39,7 +39,7 @@ async def get_openai():
         # 2回目のプロンプトを作成
         second_prompt = (
             f"先ほど挙げたスポット『{first_response}』について、"
-            "そのスポットを訪れる際におすすめの時間帯や注意点を教えてください。"
+            "そのスポットに関連するキーワードを一つ教えてください．抽象的でない，よりそのスポットを表したキーワードでお願いします．その地区の名前などはやめてください．キーワードのみを返してください．"
         )
 
         second_completion = client.chat.completions.create(
