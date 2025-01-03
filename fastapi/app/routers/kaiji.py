@@ -27,3 +27,12 @@ async def get_openai():
     )
 
     return {"message": completion.choices[0].message.content}
+
+# db models
+from db import Base
+from sqlalchemy import Column, Integer, String
+
+class Kaiji(Base):
+    __tablename__ = "kaiji"
+    id = Column(Integer, primary_key=True, index=True)
+    kaiji = Column(String(255), index=True)

@@ -17,7 +17,9 @@ const Header = () => {
               onClick={() => window.location.href = '/'}
             >
               <BotMessageSquare className="text-gray-600" size={30} />
-              <span className="text-lg font-semibold text-gray-600">ナカノ DE ハイク</span>
+              <span className="text-sm font-semibold text-gray-600">
+                ナカノ<br />DE<br />ハイク
+              </span>
             </div>
           </div>
           <div className="flex items-center space-x-4">
