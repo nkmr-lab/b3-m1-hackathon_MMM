@@ -54,8 +54,8 @@ async def get_openai():
 
         # 結果を返す
         return {
-            "first_response": first_response,
-            "second_response": second_response
+            "spot": first_response,
+            "word": second_response
         }
 
     except Exception as e:
