@@ -19,11 +19,55 @@ async def test():
 
 @router.get("/openai")
 async def get_openai():
-    completion = client.chat.completions.create(
-        model="gpt-4o-2024-11-20",
-        messages=[
-            {"role": "user", "content": "Who is Shohei Ohtani?"}
-        ]
-    )
+    try:
+        # 1回目のプロンプト
+        first_prompt = (
+            "東京都中野区の住民に，ほとんど知られていない置物やスポットを一つ教えてください．"
+            "ほとんど知られていないことが重要です．そのスポットの名前のみを返してください．"
+        )
 
-    return {"message": completion.choices[0].message.content}
+        first_completion = client.chat.completions.create(
+            model="gpt-4o-2024-11-20",
+            messages=[
+                {"role": "user", "content": first_prompt}
+            ]
+        )
+
+        # 1回目のレスポンス内容を取得
+        first_response = first_completion.choices[0].message.content.strip()
+
+        # 2回目のプロンプトを作成
+        second_prompt = (
+            f"先ほど挙げたスポット『{first_response}』について、"
+            "そのスポットに関連するキーワードを一つ教えてください．抽象的でない，よりそのスポットを表したキーワードでお願いします．その地区の名前などはやめてください．キーワードのみを返してください．"
+        )
+
+        second_completion = client.chat.completions.create(
+            model="gpt-4o-2024-11-20",
+            messages=[
+                {"role": "user", "content": second_prompt}
+            ]
+        )
+
+        # 2回目のレスポンス内容を取得
+        second_response = second_completion.choices[0].message.content.strip()
+
+        # 結果を返す
+        return {
+            "first_response": first_response,
+            "second_response": second_response
+        }
+
+    except Exception as e:
+        # エラーハンドリング
+        return {"error": str(e)}
+
+
+#   completion = client.chat.completions.create(
+  #      model="gpt-4o-2024-11-20",
+   #     messages=[
+    #        {"role": "user", "content": "東京都中野区の住民に，ほとんど知られていない置物やスポットを一つ教えてください．ほとんど知られていないことが重要です．そのスポットの名前だけで大丈夫です．"}
+     #   ]
+    #)
+
+    #return {"message": completion.choices[0].message.content}
