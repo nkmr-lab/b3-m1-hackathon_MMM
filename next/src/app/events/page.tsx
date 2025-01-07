@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useEffect, useState } from 'react';
+import './Event.css';
 
 /**
  * このコンポーネントはイベント紹介ページを表示します。
@@ -20,14 +21,14 @@ export default function Event() {
     let content;
 
     if (!data) { //データがまだロード(フェッチ)されていない場合
-        content = <p>Loading...</p>;
+        content = <p className="black-text">Loading...</p>;
     } else {
-        content = <pre>{JSON.stringify(data, null, 2)}</pre>;
+        content = <pre className="black-text">{JSON.stringify(data, null, 2)}</pre>;
     }
 
     return (
         <>
-            <h1>イベント紹介ページです．</h1>
+            <h1 className="black-text">イベント紹介ページ</h1>
             {content}
         </>
     );
