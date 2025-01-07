@@ -16,3 +16,12 @@ router = APIRouter()
 @router.get("/micchi")
 async def test():
     return "micchi"
+
+# db models
+from db import Base
+from sqlalchemy import Column, Integer, String
+
+class Micchi(Base):
+    __tablename__ = "micchi"
+    id = Column(Integer, primary_key=True, index=True)
+    micchi = Column(String(255), index=True)

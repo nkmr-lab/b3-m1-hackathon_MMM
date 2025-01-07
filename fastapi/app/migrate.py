@@ -1,10 +1,22 @@
 import time
-from sqlalchemy import create_engine, text
+from sqlalchemy import create_engine, text, MetaData
 from sqlalchemy.exc import OperationalError
-from routers.test import Base
+# from routers.test import Base
+from db import Base
+from routers.mar import Base as MarBase
+from routers.kaiji import Base as KaijiBase
+from routers.micchi import Base as MicchiBase
 
 DB_URL = "mysql+pymysql://root@db:3306/mmm_db?charset=utf8"
 engine = create_engine(DB_URL, echo=True)
+
+# 各Baseのメタデータを統合
+combined_metadata = MetaData()
+for base in [MarBase, MicchiBase, KaijiBase]:
+    base.metadata.reflect(bind=engine)  # 既存のテーブル構造を読み込む
+    for table_name, table in base.metadata.tables.items():
+        if table_name not in combined_metadata.tables:
+            table.tometadata(combined_metadata)
 
 def wait_for_db_connection(max_retries=5, wait_interval=5):
     retries = 0
