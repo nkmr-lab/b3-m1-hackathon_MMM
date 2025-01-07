@@ -13,10 +13,13 @@ engine = create_engine(DB_URL, echo=True)
 # 各Baseのメタデータを統合
 combined_metadata = MetaData()
 for base in [MarBase, MicchiBase, KaijiBase]:
-    base.metadata.reflect(bind=engine)  # 既存のテーブル構造を読み込む
-    for table_name, table in base.metadata.tables.items():
-        if table_name not in combined_metadata.tables:
-            table.tometadata(combined_metadata)
+    try:
+        base.metadata.reflect(bind=engine)  # 既存のテーブル構造を読み込む
+        for table_name, table in base.metadata.tables.items():
+            if table_name not in combined_metadata.tables:
+                table.tometadata(combined_metadata)
+    except OperationalError as e:
+        print(f"Failed to reflect metadata for {base}: {e}")
 
 def wait_for_db_connection(max_retries=5, wait_interval=5):
     retries = 0
