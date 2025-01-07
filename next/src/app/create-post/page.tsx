@@ -6,10 +6,12 @@
  * @returns {JSX.Element} 投稿一覧ページのJSX要素
  */
 
+import HandWrite from "../../components/HandWrite";
+
 export default function Post() {
     return (
         <>
-            投稿ページです．
+            <HandWrite />
         </>
     );
 }

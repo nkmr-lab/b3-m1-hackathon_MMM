@@ -10,6 +10,15 @@ from dotenv import load_dotenv
 load_dotenv()
 client=OpenAI()
 
+# db models
+from db import Base
+from sqlalchemy import Column, Integer, String
+
+class Kaiji(Base):
+    __tablename__ = "kaiji"
+    id = Column(Integer, primary_key=True, index=True)
+    kaiji = Column(String(255), index=True)
+
 # routers
 router = APIRouter()
 
