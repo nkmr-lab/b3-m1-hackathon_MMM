@@ -6,12 +6,12 @@
  * @returns {JSX.Element} 投稿一覧ページのJSX要素
  */
 
-import HandWrite from "../../components/HandWrite";
+import TextComment from "../../components/TextComment";
 
 export default function Post() {
     return (
         <>
-            <HandWrite />
+            <TextComment />
         </>
     );
 }

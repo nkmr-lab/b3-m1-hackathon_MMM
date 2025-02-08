@@ -8,7 +8,7 @@ const Header = () => {
   const [activeIndex, setActiveIndex] = useState(0);
 
   return (
-    <header className="bg-white shadow-md">
+    <header className="bg-gray-800">
       <div className="px-4 py-3">
         <div className="flex items-center justify-between">
           <div className="flex items-center space-x-4">
@@ -16,32 +16,18 @@ const Header = () => {
               className="flex items-center space-x-2 cursor-pointer"
               onClick={() => window.location.href = '/'}
             >
-              <BotMessageSquare className="text-gray-600" size={30} />
-              <span className="text-sm font-semibold text-gray-600">
-                ナカノ<br />DE<br />ハイク
+              <BotMessageSquare className="text-gray-200" size={30} />
+              <span className="text-sm font-semibold text-gray-200">
+                ナカノ DE ハイク
               </span>
             </div>
           </div>
           <div className="flex items-center space-x-4">
-            <button
-              className="text-gray-600"
-              onClick={() => window.location.href = '/create-post'}
-            >
-              投稿する
-            </button>
-            <button
-              className="text-gray-600"
-              onClick={() => window.location.href = '/feed'}
-            >
-              投稿一覧
-            </button>
-            <button
-              className="text-gray-600"
-              onClick={() => window.location.href = '/events'}
-            >
-              イベント
-            </button>
-            {user && (<span className="text-sm text-gray-600">ようこそ、{user.displayName}さん</span>)}
+            {user ? (
+              <span className="text-sm text-gray-200">ようこそ、{user.displayName}さん</span>
+            ) : (
+              <span className="text-sm text-gray-200">Googleでログイン</span>
+            )}
             <button
               onClick={() => {
                 if (user) {
@@ -55,7 +41,7 @@ const Header = () => {
               <img
                 src={user?.photoURL || '/icons/google.png'} // nullの場合の代替URLを指定
                 alt={`${user?.displayName}'s profile`}
-                style={{ borderRadius: '50%', width: '40px', height: '40px' }}
+                style={{ borderRadius: '50%', width: '30px', height: '30px' }}
               />
             </button>
           </div>
