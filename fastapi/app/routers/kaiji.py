@@ -1,8 +1,11 @@
-from fastapi import APIRouter, Depends
+from fastapi import APIRouter, File, uploadFile, Form, Depends
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.sql import select
 from db import get_db
 from pydantic import BaseModel
+
+from PIL import Image
+import io
 
 from openai import OpenAI
 from dotenv import load_dotenv
@@ -26,45 +29,53 @@ router = APIRouter()
 async def test():
     return "kaiji"
 
-@router.get("/openai")
-async def get_openai():
+# post?get?
+@router.post("/openai")
+async def get_openai(
+    image: UploadFile = File(...),
+    text: Optional[str] = Form(None),
+    quality: int = Form(3) # GPTのレベル
+):
     try:
-        # 1回目のプロンプト
-        first_prompt = (
-            "東京都中野区の住民に，ほとんど知られていない置物やスポットを一つ教えてください．"
-            "ほとんど知られていないことが重要です．そのスポットの名前のみを返してください．"
+        # 画像をPILで読み込む
+        image_bytes = await image.read()
+        pil_image = Image.open(io.BytesIO(image_bytes))
+
+        # 画像の内容をGPT-4oVisionに解析させる
+        image_analysis_prompt = "この画像について説明してください"
+
+        image_analysis_response = client.chat.completions.create(
+            model = "gpt-4o-2024-11-20",
+            messages = [
+                {"role": "user", "content": image_analysis_prompt, "image": image_bytes}
+            ]
+        )
+        
+        image_description = image_analysis_response.choices[0].message.content.strip()
+
+        # 俳句生成プロンプトを作成
+        haiku_prompt = (
+            f"以下の情報を元に，俳句を読んでください\n"
+            f"あなたの俳句を書く能力はレベルを100をMaxとしたときの{quality}です" # GPTのレベル設定
+            f"画像の内容： {image_description}\n"
         )
 
-        first_completion = client.chat.completions.create(
-            model="gpt-4o-2024-11-20",
-            messages=[
-                {"role": "user", "content": first_prompt}
+        if text:
+            haiku_prompt += f"その場所での感想： {text}\n"
+
+        # 俳句生成
+        haiku_response = client.chat.completions.create(
+            model = "gpt-4o-2024-11-20",
+            messages = [
+                {"role": "user", "content": haiku_prompt}
             ]
         )
 
-        # 1回目のレスポンス内容を取得
-        first_response = first_completion.choices[0].message.content.strip()
-
-        # 2回目のプロンプトを作成
-        second_prompt = (
-            f"先ほど挙げたスポット『{first_response}』について、"
-            "そのスポットに関連するキーワードを一つ教えてください．抽象的でない，よりそのスポットを表したキーワードでお願いします．その地区の名前などはやめてください．キーワードのみを返してください．"
-        )
-
-        second_completion = client.chat.completions.create(
-            model="gpt-4o-2024-11-20",
-            messages=[
-                {"role": "user", "content": second_prompt}
-            ]
-        )
-
-        # 2回目のレスポンス内容を取得
-        second_response = second_completion.choices[0].message.content.strip()
+        haiku = haiku_response.choices[0].message.content.strip()
 
         # 結果を返す
         return {
-            "first_response": first_response,
-            "second_response": second_response
+            "haiku": haiku
         }
 
     except Exception as e:

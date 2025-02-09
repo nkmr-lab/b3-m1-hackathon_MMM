@@ -13,9 +13,20 @@ export default function Event() {
     const [error, setError] = useState(null);
 
     useEffect(() => {
-        fetch('http://localhost:8080/kaiji')
+        let isMounted = true;
+
+        fetch('http://localhost:8080/openai')
             .then(response => response.json())
-            .then(data => setData(data));
+            .then(data => {
+                if(isMounted){
+                    setData(data)
+    }
+    })
+    .catch(error => console.error('Fetch error:',error));
+    
+    return () => {
+        isMounted = false;
+    }
     }, []);
 
     let content;
