@@ -4,15 +4,19 @@ import "./globals.css";
 import { AuthProvider } from "../context/AuthContext";
 import { Toaster } from 'react-hot-toast';
 import Header from '../components/Header';
+import Footer from '../components/Footer';
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html>
-      <body>
+      <body className="flex flex-col min-h-screen">
         <AuthProvider>
-          <Header />
-          {children}
           <Toaster />
+          <Header />
+          <main className="flex-grow">
+            {children}
+          </main>
+          <Footer />
         </AuthProvider>
       </body>
     </html>
