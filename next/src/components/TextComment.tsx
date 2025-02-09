@@ -86,6 +86,7 @@ const TextComment: React.FC = () => {
     });
 
     if (response.ok) {
+      console.log("座標："+ gpsData.latitude + ", " + gpsData.longitude);
       toast.success('投稿しました');
       setimageEncoded(null);
       setComment('');
@@ -99,7 +100,7 @@ const TextComment: React.FC = () => {
   };
 
   return (
-    <div>
+    <div className="flex flex-col items-center justify-center min-h-screen">
       {!imageEncoded ? (
         <>
           <input
