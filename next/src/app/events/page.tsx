@@ -1,7 +1,6 @@
 "use client";
 
 import React, { useEffect, useState } from 'react';
-import './Event.css';
 
 /**
  * このコンポーネントはイベント紹介ページを表示します。
@@ -10,37 +9,60 @@ import './Event.css';
  */
 export default function Event() {
     const [data, setData] = useState(null);
-    const [error, setError] = useState(null);
+    const [base64Image, setBase64Image] = useState<string | null>(null);
+
+    const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        const file = event.target.files?.[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onloadend = () => {
+                setBase64Image(reader.result as string);
+            };
+            reader.readAsDataURL(file);
+        }
+    };
 
     useEffect(() => {
-        let isMounted = true;
+        const fetchData = async () => {
+            if (!base64Image) return;
 
-        fetch('http://localhost:8080/openai')
-            .then(response => response.json())
-            .then(data => {
-                if(isMounted){
-                    setData(data)
-    }
-    })
-    .catch(error => console.error('Fetch error:',error));
-    
-    return () => {
-        isMounted = false;
-    }
-    }, []);
+            try {
+                const response = await fetch('http://localhost:8080/openai', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        image: base64Image,
+                        text: "example text",
+                        quality: 100
+                    }),
+                });
 
-    let content;
+                if (!response.ok) {
+                    console.error('Network response was not ok');
+                    return;
+                }
 
-    if (!data) { //データがまだロード(フェッチ)されていない場合
-        content = <p className="black-text">Loading...</p>;
-    } else {
-        content = <pre className="black-text">{JSON.stringify(data, null, 2)}</pre>;
-    }
+                const result = await response.json();
+                setData(result);
+            } catch (err) {
+                console.error('Fetch error:', err);
+            }
+        };
+
+        fetchData();
+    }, [base64Image]);
 
     return (
         <>
-            <h1 className="black-text">イベント紹介ページ</h1>
-            {content}
+            <h1>イベント紹介ページです．</h1>
+            <input type="file" accept="image/*" onChange={handleFileChange} />
+            {!data ? (
+                <p>Loading...</p>
+            ) : (
+                <pre>{JSON.stringify(data, null, 2)}</pre>
+            )}
         </>
     );
 }
