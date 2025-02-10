@@ -40,7 +40,7 @@ async def get_openai(
     haiku: HaikuCreate,
 ):
     try:
-        image_bytes = await haiku.image.read()
+        # image_bytes = await haiku.image.read()
 
         # 画像の内容をGPT-4oVisionに解析させる
         image_analysis_prompt = "この画像について説明してください"
@@ -48,7 +48,7 @@ async def get_openai(
         image_analysis_response = client.chat.completions.create(
             model = "gpt-4o-2024-11-20",
             messages = [
-                {"role": "user", "content": image_analysis_prompt, "image": image_bytes}
+                {"role": "user", "content": image_analysis_prompt, "image": haiku.image}
             ]
         )
         
