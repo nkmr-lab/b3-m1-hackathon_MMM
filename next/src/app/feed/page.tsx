@@ -9,7 +9,7 @@
 export default function Feed() {
     return (
         <>
-            投稿一覧です．
+            とうこう２・１０．
         </>
     );
 }
