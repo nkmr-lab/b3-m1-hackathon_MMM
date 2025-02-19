@@ -31,5 +31,4 @@ async def judge_spot(lat: float, lng: float):
         if distance <= spot_range:
             return spot["name"]
     
-    # どのスポットとも10以上ならFalseを返す
     return "該当なし"
