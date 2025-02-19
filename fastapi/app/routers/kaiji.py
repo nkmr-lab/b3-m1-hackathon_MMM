@@ -58,7 +58,7 @@ async def get_openai(
 
         # 俳句生成プロンプトを作成
         haiku_prompt = (
-            f"以下の情報を元に，俳句を読んでください\n"
+            f"以下の情報を元に，俳句を読んでください．以下の三つの条件を必ず守ってください．一つ目は，俳句のみを出力すること．二つ目は，改行をしないこと．三つ目は，上五，中七，下五をカンマ区切りで出力する．\n"
             f"あなたの俳句を書く能力はレベルを100をMaxとしたときの{haiku.quality}です" # GPTのレベル設定
             f"画像の内容： {image_description}\n"
         )
@@ -78,7 +78,7 @@ async def get_openai(
 
         # 結果を返す
         return {
-            "haiku": haiku
+             haiku
         }
 
     except Exception as e:

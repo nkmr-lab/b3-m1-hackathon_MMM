@@ -148,7 +148,7 @@ export default function Event() {
             {isLoading ? (
                 <p>Loading...</p>
             ) : data ? (
-                <pre className="response">{JSON.stringify(data, null, 2)}</pre>
+                <pre className="response">{JSON.stringify(data)}</pre>
             ) : (
                 <p className="message">画像をアップロードし、感想とレベルを設定した後、送信してください。</p>
             )}
