@@ -1,3 +1,98 @@
+/* 既存のスタイル */
 .black-text {
     color: black;
+}
+
+/* 📌 追加するスタイル */
+
+/* フォーム全体を中央配置 */
+.container {
+    max-width: 500px;
+    margin: 40px auto;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    background-color: #fff;
+}
+
+/* タイトル */
+.title {
+    text-align: center;
+    margin-bottom: 30px;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+/* 入力エリアのグループ */
+.input-group {
+    margin-bottom: 25px; /* 各入力エリアの間隔を広げる */
+}
+
+/* ラベルのデザイン */
+.label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: bold;
+    font-size: 16px;
+}
+
+/* 画像アップロードボタン */
+.file-input {
+    width: 100%;
+}
+
+/* テキストエリアのスタイル */
+.textarea {
+    width: 100%;
+    height: 120px; /* 感想入力欄の高さを調整 */
+    padding: 12px;
+    font-size: 16px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    resize: vertical; /* 縦方向のみサイズ変更可能 */
+}
+
+/* スライダーのスタイル */
+.slider {
+    width: 100%;
+}
+
+/* ボタンのスタイル */
+.button {
+    width: 100%;
+    padding: 12px;
+    font-size: 16px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+/* 送信中のボタン（無効化時のスタイル） */
+.button:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+}
+
+/* エラーメッセージのスタイル */
+.error {
+    color: red;
+    font-weight: bold;
+    margin-top: 10px;
+}
+
+/* レスポンス表示エリア */
+.response {
+    background-color: #f5f5f5;
+    padding: 12px;
+    border-radius: 5px;
+    word-break: break-word;
+}
+
+/* メッセージのスタイル */
+.message {
+    text-align: center;
+    color: #555;
 }
