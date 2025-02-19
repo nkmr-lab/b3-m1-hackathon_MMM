@@ -1,4 +1,5 @@
 from fastapi import APIRouter, Depends
+from sqlalchemy import DECIMAL
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.sql import select
 from db import get_db
@@ -44,3 +45,10 @@ class Micchi(Base):
     __tablename__ = "micchi"
     id = Column(Integer, primary_key=True, index=True)
     micchi = Column(String(255), index=True)
+
+class Spots(Base):
+    __tablename__ = "spots"
+    id = Column(Integer, primary_key=True, index=True)
+    name = Column(String(255), index=True)
+    lat = Column(DECIMAL(9, 6), index=True)
+    lon = Column(DECIMAL(9, 6), index=True)
