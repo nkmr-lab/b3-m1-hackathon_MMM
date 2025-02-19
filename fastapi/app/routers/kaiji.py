@@ -19,7 +19,9 @@ from sqlalchemy import Column, Integer, String
 class Kaiji(Base):
     __tablename__ = "kaiji"
     id = Column(Integer, primary_key=True, index=True)
-    level = Column(String(255), index=True)
+    level = Column(Integer, index=True)
+    user_id = Column(String(255), index=True)
+
 
 # schemas
 class HaikuCreate(BaseModel):
