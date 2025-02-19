@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Depends
+from fastapi import APIRouter, Depends, HTTPException
 from typing import Optional
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.sql import select
@@ -84,6 +84,24 @@ async def get_openai(
     except Exception as e:
         # エラーハンドリング
         return {"error": str(e)}
+    
+    
+@router.post("/level")
+async def upload_level(post_data: HaikuCreate, db: AsyncSession = Depends(get_db)):
+    try:
+        # データベースに保存
+        db_post = Kaiji(
+            level = post_data.quality,
+            user_id = "user_id"
+        )
+        db.add(db_post)
+        await db.commit()
+        await db.refresh(db_post)
+
+        return{"message": "success"}
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
 
 
 #   completion = client.chat.completions.create(
