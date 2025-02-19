@@ -36,13 +36,12 @@ router = APIRouter()
 async def test():
     return "kaiji"
 
-# post?get?
+
 @router.post("/openai")
 async def get_openai(
     haiku: HaikuCreate,
 ):
     try:
-        # image_bytes = await haiku.image.read()
 
         # 画像の内容をGPT-4oVisionに解析させる
         image_analysis_prompt = "この画像について説明してください"
@@ -58,11 +57,33 @@ async def get_openai(
 
         # 俳句生成プロンプトを作成
         haiku_prompt = (
-            f"以下の情報を元に，俳句を読んでください．以下の三つの条件を必ず守ってください．一つ目は，俳句のみを出力すること．二つ目は，改行をしないこと．三つ目は，上五，中七，下五をカンマ区切りで出力する．\n"
-            f"あなたの俳句を書く能力はレベルを3をMaxとしたときの{haiku.quality}です．レベルの目安としては，レベル1は小学生レベル，レベル２は成人レベル，レベル３は詩人レベルでお願いします．レベルの違いが初心者でもわかるくらい明らかにしてください．" # GPTのレベル設定
-            f"画像の内容： {image_description}\n"
+            f"以下の情報を元に，俳句を読んでください．\n"
+            f"以下の三つの条件を必ず守ってください．\n"
+            f"一つ目は，俳句のみを出力すること．\n"
+            f"二つ目は，改行をしないこと．\n"
+            f"三つ目は，上五，中七，下五をカンマ','区切りで出力する．\n"
         )
 
+        # haiku.qualityに応じてプロンプトを変更
+        if haiku.quality == 1:
+            haiku_prompt += (
+               "あなたは小学生です。簡単な言葉を使って俳句を作ってください。\n"
+               "感情はシンプルで素直なものにしてください。\n"
+            )
+        elif haiku.quality == 2:
+            haiku_prompt += (
+                "あなたは成人です。自然や季節を表現し、感情を込めた俳句を作ってください。\n"
+                "難しすぎないが、美しい言葉を使ってください。\n"
+            )
+        elif haiku.quality ==3:
+            haiku_prompt += (
+                "あなたはプロの詩人です。芸術的で奥深い俳句を作ってください。\n"
+                "言葉の選び方にこだわり、哲学的または象徴的な表現を含めてください。\n"
+            )
+        else:
+            haiku_prompt += "通常のレベルで俳句を作成してください。\n"
+
+        # 感想をプロンプトに追加
         if haiku.text:
             haiku_prompt += f"その場所での感想： {haiku.text}\n"
 
