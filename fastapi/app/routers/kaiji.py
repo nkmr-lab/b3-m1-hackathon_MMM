@@ -99,7 +99,7 @@ async def get_openai(
 
         # 結果を返す
         return {
-             haiku
+            haiku
         }
 
     except Exception as e:

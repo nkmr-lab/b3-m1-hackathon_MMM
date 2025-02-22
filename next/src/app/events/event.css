@@ -96,3 +96,69 @@
     text-align: center;
     color: #555;
 }
+
+/* 俳句をキャラクターが詠んでる感じにするための */
+/* 俳句表示コンテナ */
+.haiku-container {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    margin-top: 20px;
+}
+
+/* キャラクター画像 */
+.character {
+    width: 120px;  /* キャラクターのサイズを調整 */
+    height: auto;
+}
+
+/* 吹き出しのデザイン */
+.speech-bubble {
+    position: relative;
+    background: #fff;
+    border-radius: 10px;
+    padding: 15px;
+    max-width: 300px;
+    text-align: center;
+    border: 2px solid #000;
+    margin-top: 10px;
+}
+
+/* 吹き出しの三角形（キャラクターの口に向ける） */
+.speech-bubble::after {
+    content: "";
+    position: absolute;
+    bottom: -15px;
+    left: 50%;
+    transform: translateX(-50%);
+    border-width: 15px;
+    border-style: solid;
+    border-color: #fff transparent transparent transparent;
+}
+
+/* 俳句の文字スタイル */
+.haiku-text {
+    font-size: 20px;
+    font-weight: bold;
+    color: #333;
+    white-space: pre-line; /* 改行を適用 */
+}
+
+/* キャラクターが考え中の時のテキスト */
+.thinking-text {
+    font-size: 18px;
+    font-weight: bold;
+    color: #555;
+    margin-top: 10px;
+}
+
+/* 縦書き用スタイル */
+.vertical-text {
+    writing-mode: vertical-rl; /* 縦書き（右から左へ） */
+    text-orientation: upright; /* 文字を直立させる */
+    font-family: "Noto Serif JP", "Yu Mincho", serif; /* 和風フォント */
+    font-size: 22px;
+    line-height: 2.2; /* 行間を調整 */
+    text-align: center;
+    padding: 15px;
+}

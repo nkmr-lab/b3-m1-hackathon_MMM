@@ -104,6 +104,11 @@ export default function Event() {
 
     return (
         <div className="container">
+
+            {/* 俳句が表示されていないときのみ入力部分を表示 */}
+        {!data && (
+            <>
+
             <h1 className="title black-text">写真と感想を教えてください！</h1>
 
             {/* 画像アップロード */}
@@ -143,15 +148,32 @@ export default function Event() {
                     {isLoading ? "送信中..." : "送信"}
                 </button>
             </div>
+            </>
+        )}
 
             {/* 結果の表示 */}
             {isLoading ? (
                 <p>Loading...</p>
             ) : data ? (
-                <pre className="response">{JSON.stringify(data)}</pre>
+                /*<pre className="response">{JSON.stringify(data)}</pre>*/
+
+                <div className="haiku-container">
+                    {/* キャラクターのイラスト（話している） */}
+                     <img src="/icons/character-speaking.jpg" alt="キャラクター" className="character" />
+                     
+                     {/* 吹き出しデザイン */}
+                     <div className="speech-bubble vertical-text">
+                        <h3 className="haiku-text">
+                            {JSON.stringify(data)
+                            .replace(/^\["|"\]$/g, "")  // [""] を削除
+                            .replace(/,/g, "\n")       // カンマを改行に変換
+                            }
+                        </h3>
+                    </div>
+                </div>
             ) : (
                 <p className="message">画像をアップロードし、感想とレベルを設定した後、送信してください。</p>
-            )}
+             )}
       </div>
     );
 }
