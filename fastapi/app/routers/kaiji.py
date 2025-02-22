@@ -106,18 +106,18 @@ async def get_openai(
         return {"error": str(e)}
     
 
-@router.post("/level")
-async def upload_level(post_data: LevelCreate, db: AsyncSession = Depends(get_db)):
-    try:
-        # データベースに保存
-        db_post = User(
-            level = post_data.quality,
-            user_id = post_data.user_id
-        )
-        db.add(db_post)
-        await db.commit()
-        await db.refresh(db_post)
+# @router.post("/level")
+# async def upload_level(post_data: LevelCreate, db: AsyncSession = Depends(get_db)):
+#     try:
+#         # データベースに保存
+#         db_post = User(
+#             level = post_data.quality,
+#             user_id = post_data.user_id
+#         )
+#         db.add(db_post)
+#         await db.commit()
+#         await db.refresh(db_post)
 
-        return{"message": "success"}
-    except Exception as e:
-        raise HTTPException(status_code=500, detail=str(e))
+#         return{"message": "success"}
+#     except Exception as e:
+#         raise HTTPException(status_code=500, detail=str(e))

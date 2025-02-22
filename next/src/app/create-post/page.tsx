@@ -12,8 +12,8 @@ import Achievement from "../../components/Achievement";
 export default function Post() {
     return (
         <>
-            {/* <TextComment /> */}
-            <Achievement />
+            <TextComment />
+            {/* <Achievement /> */}
         </>
     );
 }

@@ -7,7 +7,7 @@ from db import Base  # ORM定義
 from routers.mar import Base as MarBase
 from routers.kaiji import Base as KaijiBase
 from routers.micchi import Base as MicchiBase
-from routers.micchi import Spots
+from routers.micchi import Spot
 import json
 
 # DB接続情報
@@ -45,12 +45,11 @@ def add_records_from_json(filename: str, session: Session):
     """JSONファイルからデータを読み込んでデータベースに挿入"""
     with open(filename, "r", encoding="utf-8") as file:
         data = json.load(file)
-
     try:
         # spots テーブルにデータを挿入
         if "spots" in data:
             for spot in data["spots"]:
-                session.add(Spots(**spot))
+                session.add(Spot(**spot))
         session.commit()
         print("✅ Initial data inserted successfully from JSON.")
     except Exception as e:
