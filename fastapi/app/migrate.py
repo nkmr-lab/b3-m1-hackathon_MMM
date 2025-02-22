@@ -1,3 +1,4 @@
+"""deprecated"""
 import time
 from sqlalchemy import create_engine, text, MetaData
 from sqlalchemy.exc import OperationalError
@@ -36,13 +37,24 @@ def wait_for_db_connection(max_retries=5, wait_interval=5):
     print("Could not connect to the database. Exiting.")
     return False
 
-def reset_database():
+def apply_sql_from_file(file_path):
+    """ファイルからSQLを読み込み、データベースに適用"""
+    with open(file_path, "r", encoding="utf-8") as f:
+        sql = f.read()
+    
+    try:
+        with engine.connect() as conn:
+            conn.execute(text(sql))
+        print(f"Successfully applied SQL from {file_path}")
+    except OperationalError as e:
+        print(f"Failed to apply SQL from {file_path}: {e}")
+
+def reset_and_apply_sql():
+    """データベースをリセットし、SQLファイルの適用"""
     if wait_for_db_connection():
-        Base.metadata.drop_all(bind=engine)
-        Base.metadata.create_all(bind=engine)
-        print("Database reset successful.")
+        apply_sql_from_file("schema.sql")
     else:
-        print("Failed to reset the database due to connection issues.")
+        print("Could not connect to the database. Exiting.")
 
 if __name__ == "__main__":
-    reset_database()
+    reset_and_apply_sql()

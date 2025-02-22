@@ -17,6 +17,7 @@ import base64
 import uuid
 import os
 
+# api schema
 class PostCreate(BaseModel):
     image: str = Field(
         default="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUA",
