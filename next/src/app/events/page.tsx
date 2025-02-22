@@ -102,6 +102,20 @@ export default function Event() {
         }
     };
 
+    // キャラクター画像をレベルごとに変更
+    const getCharacterImage = () => {
+    switch (quality) {
+        case 1:
+            return "/icons/character-speaking.png"; // 小学生向け
+        case 2:
+            return "/icons/character-speaking.jpg"; // 成人向け
+        case 3:
+            return "/icons/character-thinking.png"; // 詩人向け
+        default:
+            return "/icons/character-speaking.png"; // デフォルト
+            }
+        };
+
     return (
         <div className="container">
 
@@ -159,7 +173,7 @@ export default function Event() {
 
                 <div className="haiku-container">
                     {/* キャラクターのイラスト（話している） */}
-                     <img src="/icons/character-speaking.png" alt="キャラクター" className="character" />
+                     <img src={getCharacterImage()} alt="キャラクター" className="character" />
                      
                      {/* 吹き出しデザイン */}
                      <div className="speech-bubble vertical-text">
