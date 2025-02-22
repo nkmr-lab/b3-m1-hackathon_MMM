@@ -102,8 +102,27 @@ export default function Event() {
         }
     };
 
+    // キャラクター画像をレベルごとに変更
+    const getCharacterImage = () => {
+    switch (quality) {
+        case 1:
+            return "/icons/character-speaking.png"; // 小学生向け
+        case 2:
+            return "/icons/character-speaking.jpg"; // 成人向け
+        case 3:
+            return "/icons/character-thinking.png"; // 詩人向け
+        default:
+            return "/icons/character-speaking.png"; // デフォルト
+            }
+        };
+
     return (
         <div className="container">
+
+            {/* 俳句が表示されていないときのみ入力部分を表示 */}
+        {!data && (
+            <>
+
             <h1 className="title black-text">写真と感想を教えてください！</h1>
 
             {/* 画像アップロード */}
@@ -143,15 +162,42 @@ export default function Event() {
                     {isLoading ? "送信中..." : "送信"}
                 </button>
             </div>
+            </>
+        )}
 
             {/* 結果の表示 */}
             {isLoading ? (
-                <p>Loading...</p>
+                <p>考え中・・・</p>
             ) : data ? (
-                <pre className="response">{JSON.stringify(data)}</pre>
+                /*<pre className="response">{JSON.stringify(data)}</pre>*/
+
+                <div className="haiku-display">
+                    {/* 入力した画像を上に表示 */}
+                    {base64Image && <img src={base64Image} alt="入力画像" className="input-image" />}
+
+                    <div className="haiku-content">
+                     {/* 俳句 */}
+                     <div className="speech-bubble vertical-text haiku-left">
+                        <h3 className="haiku-text">
+                            {JSON.stringify(data)
+                            .replace(/^\["|"\]$/g, "")  // [""] を削除
+                            /*.replace(/,/g, "\n")  */     // カンマを改行に変換
+                            .split(",") // カンマで区切る
+                            .map((line, index) => (
+                                <span key={index} className={`haiku-line line-${index}`}>
+                                    {line}
+                                </span>
+                            ))}
+                        </h3>
+                     </div>
+
+                     {/* キャラクター（右下） */}
+                     <img src={getCharacterImage()} alt="キャラクター" className="character character-large character-right" />
+                     </div>
+                </div>
             ) : (
                 <p className="message">画像をアップロードし、感想とレベルを設定した後、送信してください。</p>
-            )}
+             )}
       </div>
     );
 }
