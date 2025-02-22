@@ -20,7 +20,7 @@ const Spots: React.FC = () => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const res = await fetch(`http://localhost:8080/spots-with-achievement?user_id=${user?.uid ?? "guest"}`);
+                const res = await fetch(`http://localhost:8080/spots-with-achievement?user_uid=${user?.uid ?? "guest"}`);
                 if (!res.ok) {
                     throw new Error("データの取得に失敗しました");
                 }

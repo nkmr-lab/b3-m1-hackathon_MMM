@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 
 /**
- * このコンポーネントは投稿一覧ページを表示します。みっちーの担当です。
+ * このコンポーネントは投稿一覧ページを表示します。。
  *
  * @returns {JSX.Element} 投稿一覧ページのJSX要素
  */
@@ -123,7 +123,7 @@ function HoverCard({
         }}
       >
         <img
-          src={post.image}
+          src={"http://localhost:8080/image/7e82d568-68c0-4c7e-a5dc-5aeff4d68d50.png"}
           alt="写真"
           style={{
             width: '100%',

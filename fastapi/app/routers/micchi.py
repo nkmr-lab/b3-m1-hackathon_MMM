@@ -75,12 +75,12 @@ async def read_spots(db: AsyncSession = Depends(get_db)):
     return db_spots
 
 @router.get("/spots-with-achievement")
-async def read_spots_with_achievement(user_id: str, db: AsyncSession = Depends(get_db)):
+async def read_spots_with_achievement(user_uid: str, db: AsyncSession = Depends(get_db)):
     result = await db.execute(select(Spot))
     db_spots = result.scalars().all()
     spots = []
     for spot in db_spots:
-        user_spot = await db.execute(select(UserSpot).filter_by(user_uid=user_id, spot_id=spot.id))
+        user_spot = await db.execute(select(UserSpot).filter_by(user_uid=user_uid, spot_id=spot.id))
         user_spot = user_spot.scalars().first()
         spots.append({
             "name": spot.name,

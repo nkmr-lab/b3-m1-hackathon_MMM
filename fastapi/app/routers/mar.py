@@ -19,15 +19,15 @@ import os
 
 # api schema
 class PostCreate(BaseModel):
-    image: str = Field(
+    image_encoded: str = Field(
         default="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUA",
         title="Image Data",
         description="Base64 encoded image data with MIME type prefix",
-        pattern=r"^data:image/.+;base64,[a-zA-Z0-9+/=]+$"  # データURI形式をチェック
+        pattern=r"^data:image/.+;base64,[a-zA-Z0-9+/=]+$"
     )
-    user_id: str = Field(
+    user_uid: str = Field(
         ...,
-        title="User ID",
+        title="User ID like UUID, not a number",
         description="ID of the user who uploads the image",
         min_length=1,  # 空文字列を防ぐ
         max_length=36  # UUIDを想定
@@ -46,6 +46,12 @@ class PostCreate(BaseModel):
         ge=-180.0,  # 西経180度
         le=180.0  # 東経180度
     )
+    haiku: str = Field(
+        default="This is a haiku.",
+        title="Haiku",
+        description="Haiku about the image",
+        max_length=225
+    )
     comment: str = Field(
         default="This is a comment.",
         title="Comment",
@@ -54,11 +60,11 @@ class PostCreate(BaseModel):
     )
 
 
-@router.post("/upload")
+@router.post("/tweet")
 async def upload_image(post_data: PostCreate, db: AsyncSession = Depends(get_db)):
     try:
         # データURLから画像データをデコード
-        header, data = post_data.image.split(',', 1)
+        header, data = post_data.image_encoded.split(',', 1)
         image_data = base64.b64decode(data)  # 別の変数に代入
 
         # 一意のファイル名を生成
@@ -74,20 +80,20 @@ async def upload_image(post_data: PostCreate, db: AsyncSession = Depends(get_db)
         
         # データベースに保存
         db_post = Post(
-            img_path=file_path,
-            user_id=post_data.user_id,  # post_data から正しく取得
+            img_file_name=file_name,
+            user_uid=post_data.user_uid,  # post_data から正しく取得
             gps_lat=post_data.gps_lat,
             gps_lon=post_data.gps_lon,
+            haiku=post_data.haiku,
             comment=post_data.comment
         )
         db.add(db_post)
         await db.commit()
         await db.refresh(db_post)
 
-        return {"message": "Image saved successfully", "file_path": file_path}
+        return {"message": "Image saved successfully", "file_name": file_name}
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
-
 
 # db models
 from db import Base
@@ -96,8 +102,9 @@ from sqlalchemy import Column, Integer, String
 class Post(Base):
     __tablename__ = "posts"
     id = Column(Integer, primary_key=True, index=True)
-    img_path = Column(String(255), index=True)
+    img_file_name = Column(String(255), index=True)
     gps_lat = Column(DECIMAL(9, 6), index=True)  # 精度を指定
     gps_lon = Column(DECIMAL(9, 6), index=True)  # 精度を指定
     comment = Column(Text)
-    user_id = Column(String(255), index=True)
+    haiku = Column(String(225))
+    user_uid = Column(String(255), index=True)
