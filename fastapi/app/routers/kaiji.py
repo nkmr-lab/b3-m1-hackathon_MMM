@@ -16,8 +16,8 @@ client=OpenAI()
 from db import Base
 from sqlalchemy import Column, Integer, String
 
-class Kaiji(Base):
-    __tablename__ = "kaiji"
+class User(Base):
+    __tablename__ = "user"
     id = Column(Integer, primary_key=True, index=True)
     level = Column(Integer, index=True)
     user_id = Column(String(255), index=True)
@@ -111,7 +111,7 @@ async def get_openai(
 async def upload_level(post_data: HaikuCreate, db: AsyncSession = Depends(get_db)):
     try:
         # データベースに保存
-        db_post = Kaiji(
+        db_post = User(
             level = post_data.quality,
             user_id = "user_id"
         )
