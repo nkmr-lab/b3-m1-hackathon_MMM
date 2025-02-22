@@ -3,9 +3,7 @@
     color: black;
 }
 
-/* 📌 追加するスタイル */
-
-/* フォーム全体を中央配置 */
+/* 📌 フォームエリア（中央配置） */
 .container {
     max-width: 500px;
     margin: 40px auto;
@@ -41,15 +39,15 @@
     width: 100%;
 }
 
-/* テキストエリアのスタイル */
+/* テキストエリア */
 .textarea {
     width: 100%;
-    height: 120px; /* 感想入力欄の高さを調整 */
+    height: 120px;
     padding: 12px;
     font-size: 16px;
     border-radius: 5px;
     border: 1px solid #ccc;
-    resize: vertical; /* 縦方向のみサイズ変更可能 */
+    resize: vertical;
 }
 
 /* スライダーのスタイル */
@@ -57,7 +55,7 @@
     width: 100%;
 }
 
-/* ボタンのスタイル */
+/* ボタン */
 .button {
     width: 100%;
     padding: 12px;
@@ -70,20 +68,19 @@
     transition: 0.3s;
 }
 
-/* 送信中のボタン（無効化時のスタイル） */
 .button:disabled {
     background-color: #ccc;
     cursor: not-allowed;
 }
 
-/* エラーメッセージのスタイル */
+/* エラーメッセージ */
 .error {
     color: red;
     font-weight: bold;
     margin-top: 10px;
 }
 
-/* レスポンス表示エリア */
+/* レスポンスエリア */
 .response {
     background-color: #f5f5f5;
     padding: 12px;
@@ -91,37 +88,69 @@
     word-break: break-word;
 }
 
-/* メッセージのスタイル */
+/* メッセージ */
 .message {
     text-align: center;
     color: #555;
 }
 
-/* 俳句をキャラクターが詠んでる感じにするための */
-/* 俳句表示コンテナ */
-.haiku-container {
+/* 📌 俳句表示レイアウト調整 */
+
+/* 俳句をキャラクターが詠んでる感じにするためのコンテナ */
+.haiku-display {
     display: flex;
-    align-items: center;
     flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
     margin-top: 20px;
 }
 
-/* キャラクター画像 */
-.character {
-    width: 225px;  /* キャラクターのサイズを調整 */
+/* 入力画像（上部配置） */
+.input-image {
+    width: 60%; /* 大きすぎないように調整 */
+    max-width: 500px;
+    height: auto;
+    border-radius: 10px;
+    margin-bottom: 20px;
+}
+
+/* 俳句 & キャラクターのコンテナ */
+.haiku-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    width: 100%;
+    max-width: 600px;
+    position: relative;
+}
+
+/* 俳句（左下に配置） */
+.haiku-left {
+    position: absolute;
+    left: 10%;
+    bottom: 0;
+    max-width: 200px;
+}
+
+/* キャラクター（右下に配置） */
+.character-right {
+    position: absolute;
+    right: 10%;
+    bottom: 0;
+    width: 180px;
     height: auto;
 }
 
-/* 吹き出しのデザイン */
+/* 📌 吹き出しデザイン（統一） */
 .speech-bubble {
     position: relative;
-    background: #fff;
+    background: #faf2e4; /* 和紙風の背景 */
     border-radius: 20px;
     padding: 20px;
-    max-width: 480px;
+    max-width: 250px; /* 俳句の表示幅を制限 */
     text-align: center;
-    border: 2px solid #000;
-    margin-top: 15px;
+    border: 3px solid #333;
 }
 
 /* 吹き出しの三角形（キャラクターの口に向ける） */
@@ -133,18 +162,29 @@
     transform: translateX(-50%);
     border-width: 15px;
     border-style: solid;
-    border-color: #fff transparent transparent transparent;
+    border-color: #faf2e4 transparent transparent transparent;
+}
+
+/* 縦書き用スタイル */
+.vertical-text {
+    writing-mode: vertical-rl;
+    text-orientation: upright;
+    font-family: "Noto Serif JP", "Yu Mincho", serif;
+    font-size: 33px;
+    line-height: 3.3; /* 行間を調整 */
+    text-align: center;
+    padding: 20px;
 }
 
 /* 俳句の文字スタイル */
 .haiku-text {
-    font-size: 20px;
+    font-size: 22px;
     font-weight: bold;
     color: #333;
-    white-space: pre-line; /* 改行を適用 */
+    white-space: pre-line;
 }
 
-/* キャラクターが考え中の時のテキスト */
+/* 考え中の時のテキスト */
 .thinking-text {
     font-size: 18px;
     font-weight: bold;
@@ -152,13 +192,23 @@
     margin-top: 10px;
 }
 
-/* 縦書き用スタイル */
-.vertical-text {
-    writing-mode: vertical-rl; /* 縦書き（右から左へ） */
-    text-orientation: upright; /* 文字を直立させる */
-    font-family: "Noto Serif JP", "Yu Mincho", serif; /* 和風フォント */
-    font-size: 33px;
-    line-height: 3.3; /* 行間を調整 */
-    text-align: center;
-    padding: 20px;
+/* 📌 レスポンシブ対応 */
+@media screen and (max-width: 768px) {
+    .input-image {
+        width: 90%;
+    }
+
+    .haiku-content {
+        width: 100%;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .speech-bubble {
+        max-width: 220px;
+    }
+
+    .character-large {
+        width: 140px;
+    }
 }

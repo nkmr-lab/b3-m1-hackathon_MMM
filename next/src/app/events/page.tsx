@@ -171,19 +171,24 @@ export default function Event() {
             ) : data ? (
                 /*<pre className="response">{JSON.stringify(data)}</pre>*/
 
-                <div className="haiku-container">
-                    {/* キャラクターのイラスト（話している） */}
-                     <img src={getCharacterImage()} alt="キャラクター" className="character" />
-                     
-                     {/* 吹き出しデザイン */}
-                     <div className="speech-bubble vertical-text">
+                <div className="haiku-display">
+                    {/* 入力した画像を上に表示 */}
+                    {base64Image && <img src={base64Image} alt="入力画像" className="input-image" />}
+
+                    <div className="haiku-content">
+                     {/* 俳句 */}
+                     <div className="speech-bubble vertical-text haiku-left">
                         <h3 className="haiku-text">
                             {JSON.stringify(data)
                             .replace(/^\["|"\]$/g, "")  // [""] を削除
                             .replace(/,/g, "\n")       // カンマを改行に変換
                             }
                         </h3>
-                    </div>
+                     </div>
+
+                     {/* キャラクター（右下） */}
+                     <img src={getCharacterImage()} alt="キャラクター" className="character character-large character-right" />
+                     </div>
                 </div>
             ) : (
                 <p className="message">画像をアップロードし、感想とレベルを設定した後、送信してください。</p>
