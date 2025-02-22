@@ -153,13 +153,13 @@ export default function Event() {
 
             {/* 結果の表示 */}
             {isLoading ? (
-                <p>Loading...</p>
+                <p>考え中・・・</p>
             ) : data ? (
                 /*<pre className="response">{JSON.stringify(data)}</pre>*/
 
                 <div className="haiku-container">
                     {/* キャラクターのイラスト（話している） */}
-                     <img src="/icons/character-speaking.jpg" alt="キャラクター" className="character" />
+                     <img src="/icons/character-speaking.png" alt="キャラクター" className="character" />
                      
                      {/* 吹き出しデザイン */}
                      <div className="speech-bubble vertical-text">
