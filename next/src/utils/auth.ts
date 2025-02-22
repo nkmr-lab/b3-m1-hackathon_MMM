@@ -10,17 +10,29 @@ const signInWithGoogle = async () => {
         const result = await signInWithPopup(auth, provider);
         // Googleユーザー情報を取得
         const user = result.user;
-        const response = await fetch("http://localhost:8080/user", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-                uid: user.uid,
-                email: user.email,
-                name: user.displayName,
-            }),
-        });
+        try {
+            const response = await fetch("http://localhost:8080/create-user", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    uid: user.uid,
+                    email: user.email,
+                    name: user.displayName,
+                }),
+            });
+        
+            if (!response.ok) {
+                const errorData = await response.json();
+                console.error("Failed to create user:", errorData);
+            } else {
+                console.log("User created successfully");
+            }
+        } catch (error) {
+            console.error("Error occurred while creating user:", error);
+        }
+        
         console.log("Logged in as ", user.displayName, user.email, user.uid);
         toast.success("Logged in as " + user.displayName);
     } catch (error) {
