@@ -13,7 +13,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <AuthProvider>
           <Toaster />
           <Header />
-          <main className="flex-grow">
+          <main className="flex-grow pb-16">
             {children}
           </main>
           <Footer />
