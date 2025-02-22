@@ -57,3 +57,9 @@ class Spots(Base):
     name = Column(String(255), index=True)
     lat = Column(DECIMAL(9, 6), index=True)
     lon = Column(DECIMAL(9, 6), index=True)
+
+class User(Base):
+    __tablename__ = "user"
+    id = Column(Integer, primary_key=True, index=True)
+    level = Column(Integer, index=True)
+    user_id = Column(String(255), index=True)
