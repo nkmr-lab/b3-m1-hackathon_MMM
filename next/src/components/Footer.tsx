@@ -1,5 +1,5 @@
 import React from 'react';
-import { FaPen, FaEye, FaFeatherAlt } from 'react-icons/fa';
+import { FaRunning, FaEye, FaFeatherAlt } from 'react-icons/fa';
 
 const Footer = () => {
   return (
@@ -11,8 +11,8 @@ const Footer = () => {
               className="flex flex-col items-center text-xs text-gray-200"
               onClick={() => window.location.href = '/create-post'}
             >
-              <FaPen className="text-gray-200 mb-1" />
-              日記
+              <FaRunning className="text-gray-200 mb-1" />
+              歩く
             </button>
           </div>
           <div className="flex flex-col items-center">
@@ -30,7 +30,7 @@ const Footer = () => {
               onClick={() => window.location.href = '/events'}
             >
               <FaFeatherAlt className="text-gray-200 mb-1" />
-              俳句
+              詠む
             </button>
           </div>
         </div>
