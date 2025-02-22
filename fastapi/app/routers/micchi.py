@@ -19,8 +19,14 @@ router = APIRouter()
 async def test():
     return "micchi"
 
+@router.get("/spots")
+async def read_spots(db: AsyncSession = Depends(get_db)):
+    result = await db.execute(select(Spots))
+    db_spots = result.scalars().all()
+    return db_spots
+
 @router.get("/judge-spot")
-async def judge_spot(lat: float, lng: float):
+async def judge_spot(lat: float, lng: float, db: AsyncSession = Depends(get_db)):
     # 複数のスポットをリストにして登録
     spots = [
         {"name": "明治大学", "lat": 10, "lng": 10},

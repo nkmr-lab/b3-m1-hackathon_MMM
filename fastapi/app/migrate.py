@@ -1,3 +1,4 @@
+"""deprecated"""
 import time
 from sqlalchemy import create_engine, text, MetaData
 from sqlalchemy.exc import OperationalError

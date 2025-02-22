@@ -9,8 +9,5 @@ RUN pip install --no-cache-dir -r requirements.txt
 # アプリケーションコードをコピー
 COPY ./app/ .
 
-# schema.sql もコピー
-COPY ./app/schema.sql /app/schema.sql
-
 # コンテナ起動時にマイグレーションを実行し、FastAPI を起動
-CMD ["sh", "-c", "python migrate.py && uvicorn main:app --host 0.0.0.0 --port 8080"]
+CMD ["sh", "-c", "python init_db.py && uvicorn main:app --host 0.0.0.0 --port 8080 --reload"]
