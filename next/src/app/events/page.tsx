@@ -181,8 +181,13 @@ export default function Event() {
                         <h3 className="haiku-text">
                             {JSON.stringify(data)
                             .replace(/^\["|"\]$/g, "")  // [""] を削除
-                            .replace(/,/g, "\n")       // カンマを改行に変換
-                            }
+                            /*.replace(/,/g, "\n")  */     // カンマを改行に変換
+                            .split(",") // カンマで区切る
+                            .map((line, index) => (
+                                <span key={index} className={`haiku-line line-${index}`}>
+                                    {line}
+                                </span>
+                            ))}
                         </h3>
                      </div>
 

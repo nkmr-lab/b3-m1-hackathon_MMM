@@ -6,10 +6,10 @@
 /* 📌 フォームエリア（中央配置） */
 .container {
     max-width: 500px;
-    margin: 40px auto;
+    margin: 20px auto;
     padding: 30px;
     border-radius: 10px;
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+   /*box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);*/
     background-color: #fff;
 }
 
@@ -103,7 +103,8 @@
     align-items: center;
     justify-content: center;
     width: 100%;
-    margin-top: 20px;
+    /*margin-top: 20px;*/
+    position: relative;
 }
 
 /* 入力画像（上部配置） */
@@ -123,20 +124,21 @@
     width: 100%;
     max-width: 600px;
     position: relative;
+    min-height: 250px; /* キャラクターと俳句が重ならないように高さを確保 */
 }
 
 /* 俳句（左下に配置） */
 .haiku-left {
     position: absolute;
-    left: 10%;
+    left: -20%;
     bottom: 0;
-    max-width: 200px;
+    max-width: 180px;
 }
 
 /* キャラクター（右下に配置） */
 .character-right {
     position: absolute;
-    right: 10%;
+    right: -7%;
     bottom: 0;
     width: 180px;
     height: auto;
@@ -148,13 +150,13 @@
     background: #faf2e4; /* 和紙風の背景 */
     border-radius: 20px;
     padding: 20px;
-    max-width: 250px; /* 俳句の表示幅を制限 */
+    max-width: 200px; /* 俳句の表示幅を制限 */
     text-align: center;
     border: 3px solid #333;
 }
 
 /* 吹き出しの三角形（キャラクターの口に向ける） */
-.speech-bubble::after {
+/*.speech-bubble::after {
     content: "";
     position: absolute;
     bottom: -15px;
@@ -163,7 +165,7 @@
     border-width: 15px;
     border-style: solid;
     border-color: #faf2e4 transparent transparent transparent;
-}
+}*/
 
 /* 縦書き用スタイル */
 .vertical-text {
@@ -171,9 +173,9 @@
     text-orientation: upright;
     font-family: "Noto Serif JP", "Yu Mincho", serif;
     font-size: 33px;
-    line-height: 3.3; /* 行間を調整 */
+    line-height: 3; /* 行間を調整 */
     text-align: center;
-    padding: 20px;
+    padding: 10px;
 }
 
 /* 俳句の文字スタイル */
@@ -191,6 +193,29 @@
     color: #555;
     margin-top: 10px;
 }
+
+/* 俳句の縦書き配置（段違いのデザイン） */
+.formatted-haiku {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start; /* 左揃え */
+    writing-mode: vertical-rl; /* 縦書き */
+    text-orientation: upright;
+    font-family: "Noto Serif JP", "Yu Mincho", serif;
+    font-size: 30px;
+    line-height: 3.2;
+    text-align: center;
+    padding: 20px;
+}
+
+/* それぞれの行の位置調整 */
+.haiku-line {
+    display: block;
+}
+
+.line-0 { margin-top: -100px; }    /* 上五（通常の位置） */
+.line-1 { margin-top: 0px; }   /* 中七（少し下げる） */
+.line-2 { margin-top: 100px; }   /* 下五（さらに下げる） */
 
 /* 📌 レスポンシブ対応 */
 @media screen and (max-width: 768px) {
