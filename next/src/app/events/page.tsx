@@ -2,6 +2,9 @@
 
 import React, { useEffect, useState } from 'react';
 import "./event.css"; // CSSファイルをインポート
+import EXIF from 'exif-js';
+import toast from 'react-hot-toast';
+import { useAuth } from '../../context/AuthContext';
 
 /**
  * このコンポーネントはイベント紹介ページを表示します。
@@ -10,68 +13,73 @@ import "./event.css"; // CSSファイルをインポート
  */
 export default function Event() {
     const [data, setData] = useState(null);
-    const [base64Image, setBase64Image] = useState<string | null>(null);
+    //const [base64Image, setBase64Image] = useState<string | null>(null);
+    const [imageEncoded, setimageEncoded] = useState<string | null>(null);
+    const [exifData, setExifData] = useState<any>(null);
+    const [gpsData, setGpsData] = useState<{ latitude: number | null, longitude: number | null }>({ latitude: null, longitude: null });
     const [text, setText] = useState(""); // ユーザー入力用のテキスト
     const [quality, setQuality] = useState(2); // ユーザー入力用のクオリティ
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
+    const { user } = useAuth();
 
     const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const file = event.target.files?.[0];
         if (file) {
             const reader = new FileReader();
             reader.onloadend = () => {
-                setBase64Image(reader.result as string);
+                setimageEncoded(reader.result as string);
             };
-            reader.readAsDataURL(file);
-        }
+
+        // EXIF情報を取得
+        EXIF.getData(file as any, function (this: any) {
+            const allExifData = EXIF.getAllTags(this);
+            setExifData(allExifData);
+  
+            // GPSデータの有無を確認し、取得
+            if (allExifData.GPSLatitude && allExifData.GPSLongitude && allExifData.GPSLatitudeRef && allExifData.GPSLongitudeRef) {
+              const convertDMSToDD = (degrees: number, minutes: number, seconds: number, direction: string) => {
+                let dd = degrees + minutes / 60 + seconds / 3600;
+                if (direction === 'S' || direction === 'W') {
+                  dd = dd * -1;
+                }
+                return dd;
+              };
+  
+              const latitude = convertDMSToDD(
+                allExifData.GPSLatitude[0], allExifData.GPSLatitude[1], allExifData.GPSLatitude[2], allExifData.GPSLatitudeRef
+              );
+              const longitude = convertDMSToDD(
+                allExifData.GPSLongitude[0], allExifData.GPSLongitude[1], allExifData.GPSLongitude[2], allExifData.GPSLongitudeRef
+              );
+              setGpsData({ latitude, longitude });
+            } else {
+              setGpsData({ latitude: null, longitude: null });
+              setimageEncoded(null);
+              setExifData(null);
+              toast.error('画像のGPS情報が見つかりませんでした');
+            }
+          });
+          reader.readAsDataURL(file);
+        } else {
+            setimageEncoded(null);
+            setExifData(null);
+            setGpsData({ latitude: null, longitude: null });
+            toast.error('画像の読み込みに失敗しました');
+          }
     };
 
-    // 送信ボタンを押した時の処理
-    /*useEffect(() => {
-        const fetchData = async () => {
-            if (!base64Image || !text || quality <= 0) {
-                setError("画像、テキスト、クオリティのすべてを入力してください。");
-                return;
-            }
-    
-            setIsLoading(true);
-            setError(null); // エラーのリセット
-
-            try {
-                const response = await fetch('http://localhost:8080/openai', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({
-                        image: base64Image,
-                        text: text,
-                        quality: quality
-                    }),
-                });
-
-                if (!response.ok) {
-                    console.error('Network response was not ok');
-                    return;
-                }
-
-                const result = await response.json();
-                setData(result);
-            } catch (err) {
-                console.error('Fetch error:', err);
-            }
-        };
-
-        fetchData();
-    }, [base64Image]);
-    */
-
     const handleSubmit = async () => {
-        if (!base64Image || !text || quality <= 0) {
-            setError("画像、テキスト、レベルのすべてを入力してください。");
+        if (!exifData) {
+            toast.error('画像が選択されていません');
             return;
-        }
+          } else if (!text) {
+            toast.error('コメントが入力されていません');
+            return;
+          } else if (gpsData.latitude === null || gpsData.longitude === null) {
+            toast.error('画像のGPS情報が見つかりませんでした');
+            return;
+          }
 
         setIsLoading(true);
         setError(null); // エラーのリセット
@@ -83,15 +91,24 @@ export default function Event() {
                     "Content-Type": "application/json",
                 },
                 body: JSON.stringify({
-                    image: base64Image,
+                    image: imageEncoded,
                     text: text,
                     quality: quality,
                 }),
             });
 
-            if (!response.ok) {
-                throw new Error(`HTTP error! Status: ${response.status}`);
-            }
+            if (response.ok) {
+                console.log("座標："+ gpsData.latitude + ", " + gpsData.longitude);
+                toast.success('投稿しました');
+                //setimageEncoded(null);
+                setText('');
+                setExifData(null);
+                setGpsData({ latitude: null, longitude: null });
+          
+                //window.location.href = '/events'; // feedページに遷移
+              } else {
+                toast.error('投稿に失敗しました');
+              }
 
             const result = await response.json();
             setData(result);
@@ -169,11 +186,10 @@ export default function Event() {
             {isLoading ? (
                 <p>考え中・・・</p>
             ) : data ? (
-                /*<pre className="response">{JSON.stringify(data)}</pre>*/
 
                 <div className="haiku-display">
                     {/* 入力した画像を上に表示 */}
-                    {base64Image && <img src={base64Image} alt="入力画像" className="input-image" />}
+                    {imageEncoded && <img src={imageEncoded} alt="入力画像" className="input-image" />}
 
                     <div className="haiku-content">
                      {/* 俳句 */}
@@ -181,7 +197,6 @@ export default function Event() {
                         <h3 className="haiku-text">
                             {JSON.stringify(data)
                             .replace(/^\["|"\]$/g, "")  // [""] を削除
-                            /*.replace(/,/g, "\n")  */     // カンマを改行に変換
                             .split(",") // カンマで区切る
                             .map((line, index) => (
                                 <span key={index} className={`haiku-line line-${index}`}>
