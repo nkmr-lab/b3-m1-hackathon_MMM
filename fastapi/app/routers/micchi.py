@@ -1,5 +1,5 @@
 from fastapi import APIRouter, Depends
-from sqlalchemy import DECIMAL
+from sqlalchemy import Boolean, Integer, ForeignKey, Column, DateTime, DECIMAL
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.sql import select
 from db import get_db
@@ -22,14 +22,14 @@ async def test():
 
 @router.get("/spots")
 async def read_spots(db: AsyncSession = Depends(get_db)):
-    result = await db.execute(select(Spots))
+    result = await db.execute(select(Spot))
     db_spots = result.scalars().all()
     return db_spots
 
 @router.get("/judge-spot")
 async def judge_spot(lat: Decimal, lng: Decimal, db: AsyncSession = Depends(get_db)):
     # 複数のスポットをリストにして登録
-    spot_query = await db.execute(select(Spots))
+    spot_query = await db.execute(select(Spot))
     db_spots = spot_query.scalars().all()
     spots = [{"name": spot.name, "lat": spot.lat, "lng": spot.lon} for spot in db_spots]
 
@@ -51,15 +51,26 @@ class Micchi(Base):
     id = Column(Integer, primary_key=True, index=True)
     micchi = Column(String(255), index=True)
 
-class Spots(Base):
+class Spot(Base):
     __tablename__ = "spots"
     id = Column(Integer, primary_key=True, index=True)
     name = Column(String(255), index=True)
     lat = Column(DECIMAL(9, 6), index=True)
     lon = Column(DECIMAL(9, 6), index=True)
+    user_spots = Column("UserSpot", backref="spots")
 
 class User(Base):
     __tablename__ = "user"
     id = Column(Integer, primary_key=True, index=True)
     level = Column(Integer, index=True)
     user_id = Column(String(255), index=True)
+    user_spots = Column("UserSpot", backref="user")
+
+class UserSpot(Base):
+    __tablename__ = "user_spot"
+    id = Column(Integer, primary_key=True, index=True)
+    user_id = Column(Integer, index=True)
+    spot_id = Column(Integer, index=True)
+    is_achieved = Column(Boolean, index=True)
+    user = Column("User", backref="user_spot")
+    spot = Column("Spot", backref="user_spot")
