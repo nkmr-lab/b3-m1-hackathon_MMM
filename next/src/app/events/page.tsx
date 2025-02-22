@@ -12,7 +12,7 @@ export default function Event() {
     const [data, setData] = useState(null);
     const [base64Image, setBase64Image] = useState<string | null>(null);
     const [text, setText] = useState(""); // ユーザー入力用のテキスト
-    const [quality, setQuality] = useState(100); // ユーザー入力用のクオリティ
+    const [quality, setQuality] = useState(2); // ユーザー入力用のクオリティ
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
 
@@ -130,7 +130,7 @@ export default function Event() {
                 <input
                     type="range"
                     min="1"
-                    max="100"
+                    max="3"
                     value={quality}
                     onChange={(e) => setQuality(Number(e.target.value))}
                     className="slider"
@@ -148,7 +148,7 @@ export default function Event() {
             {isLoading ? (
                 <p>Loading...</p>
             ) : data ? (
-                <pre className="response">{JSON.stringify(data, null, 2)}</pre>
+                <pre className="response">{JSON.stringify(data)}</pre>
             ) : (
                 <p className="message">画像をアップロードし、感想とレベルを設定した後、送信してください。</p>
             )}
