@@ -31,15 +31,18 @@ def wait_for_db_connection(max_retries=5, wait_interval=5):
     print("❌ Could not connect to the database. Exiting.")
     return False
 
-def add_records_from_sql(filename):
+def add_records_from_sql(filename, session: Session):
     with open(filename, "r", encoding="utf-8") as file:
         sql_statements = file.read().split(";")  # SQLを `;` で分割
-
-    with engine.connect() as conn:
+    try:
         for sql in sql_statements:
             if sql.strip():  # 空のSQLを無視
-                conn.execute(text(sql))
-        conn.commit()
+                session.execute(text(sql))
+        session.commit()
+        print("✅ SQL data inserted successfully.")
+    except Exception as e:
+        session.rollback()
+        print(f"❌ Failed to insert SQL data: {e}")
 
 def add_records_from_json(filename: str, session: Session):
     """JSONファイルからデータを読み込んでデータベースに挿入"""
@@ -68,6 +71,7 @@ def initialize_database():
         print("📥 Inserting initial data from data.json...")
         with SessionLocal() as session:
             add_records_from_json("spots.json", session)
+            add_records_from_sql("guest_user_spots.sql", session) # guestアカウント用のアチーブメントの初期化
     else:
         print("❌ Failed to initialize the database due to connection issues.")
 

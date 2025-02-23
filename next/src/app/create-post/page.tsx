@@ -6,14 +6,14 @@
  * @returns {JSX.Element} 投稿一覧ページのJSX要素
  */
 
-import TextComment from "../../components/TextComment";
+// import TextComment from "../../components/TextComment";
 import Achievement from "../../components/Achievement";
 
 export default function Post() {
     return (
         <>
-            <TextComment />
-            {/* <Achievement /> */}
+            {/* <TextComment /> */}
+            <Achievement />
         </>
     );
 }

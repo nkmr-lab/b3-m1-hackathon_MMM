@@ -15,12 +15,10 @@ const Spots: React.FC = () => {
     const [spots, setSpots] = useState<Spot[]>([]);
     const [loading, setLoading] = useState(true);
 
-    console.log(user?.uid);
-
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const res = await fetch(`http://localhost:8080/spots-with-achievement?user_id=${user?.uid ?? "guest"}`);
+                const res = await fetch(`http://localhost:8080/spots-with-achievement?user_uid=${user?.uid ?? "guest"}`);
                 if (!res.ok) {
                     throw new Error("データの取得に失敗しました");
                 }
@@ -39,21 +37,21 @@ const Spots: React.FC = () => {
 
     return (
         <div>
-            <h2>スポット一覧</h2>
             <Table>
                 <TableHeader>
-                    <TableRow>
-                        <TableCell>名前</TableCell>
-                        <TableCell>緯度</TableCell>
-                        <TableCell>経度</TableCell>
+                    <TableRow
+                        style = {{backgroundColor: 'rgba(0, 0, 0, 0.1)'}}
+                    >
+                        <TableCell>スポットの名称</TableCell>
                     </TableRow>
                 </TableHeader>
                 <TableBody>
-                    {spots.map((spot) => (
-                        <TableRow key={spot.id} style={{ backgroundColor: spot.is_achieved ? 'red' : 'inherit' }}>
+                    {spots.map((spot, index) => (
+                        <TableRow
+                            key={index} // インデックスをkeyとして使用
+                            style={{ backgroundColor: spot.is_achieved ? 'rgba(0, 0, 255, 0.5)' : 'inherit' }}
+                        >
                             <TableCell>{spot.name}</TableCell>
-                            <TableCell>{spot.lat}</TableCell>
-                            <TableCell>{spot.lon}</TableCell>
                         </TableRow>
                     ))}
                 </TableBody>
