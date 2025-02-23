@@ -6,6 +6,7 @@ from sqlalchemy.sql import select
 from db import get_db
 from pydantic import BaseModel, Field
 import io, os
+from log_conf import logger
 
 from openai import OpenAI
 from dotenv import load_dotenv
@@ -38,7 +39,6 @@ async def get_openai(
     haiku: HaikuCreate,
 ):
     try:
-
         # 画像の内容をGPT-4oVisionに解析させる
         image_analysis_prompt = "この画像について説明してください"
 

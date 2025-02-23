@@ -35,13 +35,11 @@ class Spot(Base):
 class User(Base):
     __tablename__ = "users"
     id = Column(Integer, primary_key=True, index=True)
-    level = Column(Integer, index=True)
     uid = Column(String(255), unique=True, index=True)
     name = Column(String(255), index=True)
     email = Column(String(255), unique=True, index=True)
     user_spots = relationship("UserSpot", back_populates="user") # tablenameではない！！
     
-
 class UserSpot(Base):
     __tablename__ = "user_spots"
     id = Column(Integer, primary_key=True, index=True)
@@ -64,10 +62,6 @@ class CreateUserSpot(BaseModel):
 # routers
 router = APIRouter()
 
-@router.get("/micchi")
-async def test():
-    return "micchi"
-
 @router.get("/spots")
 async def read_spots(db: AsyncSession = Depends(get_db)):
     result = await db.execute(select(Spot))
@@ -76,6 +70,7 @@ async def read_spots(db: AsyncSession = Depends(get_db)):
 
 @router.get("/spots-with-achievement")
 async def read_spots_with_achievement(user_uid: str, db: AsyncSession = Depends(get_db)):
+    """特定のユーザのuser_spotのis_achievedをspotsと紐付けて取得"""
     result = await db.execute(select(Spot))
     db_spots = result.scalars().all()
     spots = []

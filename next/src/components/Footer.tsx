@@ -12,7 +12,7 @@ const Footer = () => {
               onClick={() => window.location.href = '/create-post'}
             >
               <FaRunning className="text-gray-200 mb-1" />
-              歩く
+              実績
             </button>
           </div>
           <div className="flex flex-col items-center">
