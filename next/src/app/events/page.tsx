@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import "./event.css"; // CSSファイルをインポート
 import EXIF from 'exif-js';
 import toast from 'react-hot-toast';
@@ -13,15 +13,23 @@ import { Textarea } from '../../components/ui/textarea';
  * 
  * @returns {JSX.Element} イベント紹介ページのJSX要素
  */
+
+interface ExifData {
+    GPSLatitude?: [number, number, number];
+    GPSLongitude?: [number, number, number];
+    GPSLatitudeRef?: string;
+    GPSLongitudeRef?: string;
+    [key: string]: any; // その他のEXIFデータを許容
+}
+
 export default function Event() {
     const [haiku, setHaiku] = useState("");
     const [imageEncoded, setimageEncoded] = useState<string | null>(null);
-    const [exifData, setExifData] = useState<any>(null);
+    const [exifData, setExifData] = useState<ExifData|null>(null);
     const [gpsData, setGpsData] = useState<{ latitude: number | null, longitude: number | null }>({ latitude: null, longitude: null });
     const [text, setText] = useState(""); // ユーザー入力用のテキスト
     const [quality, setQuality] = useState(1); // 俳句のレベル
     const [isLoading, setIsLoading] = useState(false);
-    const [error, setError] = useState<string | null>(null);
     const { user } = useAuth();
 
     const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {

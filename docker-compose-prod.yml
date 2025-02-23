@@ -1,0 +1,52 @@
+services:
+  next:
+    container_name: mmm-next
+    build:
+      context: ./next
+      dockerfile: Dockerfile.prod
+    ports:
+      - "7800:3000"
+    networks:
+      - mmm_network
+
+  fastapi:
+    container_name: mmm-fastapi
+    build:
+      context: ./fastapi
+      dockerfile: Dockerfile.prod
+    ports:
+      - "7801:8080"
+    depends_on:
+      - db
+    environment:
+      PYTHONPATH: /app
+      ENV: production
+    networks:
+      - mmm_network
+
+  db:
+    container_name: mmm-db
+    build:
+      context: ./mysql
+      dockerfile: Dockerfile.prod
+    ports:
+      - "7802:3306"
+    env_file:
+      - ./mysql/.env
+    volumes:
+      - mmm_mysql_prod:/var/lib/mysql
+
+  phpmyadmin:
+    container_name: mmm-dbconsole
+    image: phpmyadmin:latest
+    ports:
+      - "7803:80"
+    networks:
+      - mmm_network
+
+volumes:
+  mmm_mysql_prod:
+
+networks:
+  mmm_network:
+    external: true

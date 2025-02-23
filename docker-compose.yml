@@ -24,6 +24,8 @@ services:
       - db
     volumes:
       - ./fastapi/app:/app
+    environment:
+      ENV: development
 
   db: #ユーザ名：root, パスワード：なし
     container_name: mmm-db

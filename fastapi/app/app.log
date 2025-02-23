@@ -9495,3 +9495,354 @@ FROM posts
 FROM posts
 2025-02-23 15:43:13,310 - sqlalchemy.engine.Engine - INFO - [cached since 2452s ago] ()
 2025-02-23 15:43:13,313 - sqlalchemy.engine.Engine - INFO - ROLLBACK
+2025-02-23 16:02:25,483 - sqlalchemy.engine.Engine - INFO - SELECT DATABASE()
+2025-02-23 16:02:25,484 - sqlalchemy.engine.Engine - INFO - [raw sql] {}
+2025-02-23 16:02:25,486 - sqlalchemy.engine.Engine - INFO - SELECT @@sql_mode
+2025-02-23 16:02:25,487 - sqlalchemy.engine.Engine - INFO - [raw sql] {}
+2025-02-23 16:02:25,487 - sqlalchemy.engine.Engine - INFO - SELECT @@lower_case_table_names
+2025-02-23 16:02:25,487 - sqlalchemy.engine.Engine - INFO - [raw sql] {}
+2025-02-23 16:02:25,488 - sqlalchemy.engine.Engine - INFO - BEGIN (implicit)
+2025-02-23 16:02:25,489 - sqlalchemy.engine.Engine - INFO - SELECT 1
+2025-02-23 16:02:25,489 - sqlalchemy.engine.Engine - INFO - [generated in 0.00050s] {}
+2025-02-23 16:02:25,489 - sqlalchemy.engine.Engine - INFO - ROLLBACK
+2025-02-23 16:02:25,490 - sqlalchemy.engine.Engine - INFO - BEGIN (implicit)
+2025-02-23 16:02:25,490 - sqlalchemy.engine.Engine - INFO - DESCRIBE `mmm_db`.`micchi`
+2025-02-23 16:02:25,491 - sqlalchemy.engine.Engine - INFO - [raw sql] {}
+2025-02-23 16:02:25,494 - sqlalchemy.engine.Engine - INFO - DESCRIBE `mmm_db`.`spots`
+2025-02-23 16:02:25,494 - sqlalchemy.engine.Engine - INFO - [raw sql] {}
+2025-02-23 16:02:25,496 - sqlalchemy.engine.Engine - INFO - DESCRIBE `mmm_db`.`users`
+2025-02-23 16:02:25,496 - sqlalchemy.engine.Engine - INFO - [raw sql] {}
+2025-02-23 16:02:25,498 - sqlalchemy.engine.Engine - INFO - DESCRIBE `mmm_db`.`user_spots`
+2025-02-23 16:02:25,498 - sqlalchemy.engine.Engine - INFO - [raw sql] {}
+2025-02-23 16:02:25,499 - sqlalchemy.engine.Engine - INFO - DESCRIBE `mmm_db`.`posts`
+2025-02-23 16:02:25,500 - sqlalchemy.engine.Engine - INFO - [raw sql] {}
+2025-02-23 16:02:25,501 - sqlalchemy.engine.Engine - INFO - 
+DROP TABLE user_spots
+2025-02-23 16:02:25,501 - sqlalchemy.engine.Engine - INFO - [no key 0.00024s] {}
+2025-02-23 16:02:25,512 - sqlalchemy.engine.Engine - INFO - 
+DROP TABLE posts
+2025-02-23 16:02:25,513 - sqlalchemy.engine.Engine - INFO - [no key 0.00046s] {}
+2025-02-23 16:02:25,525 - sqlalchemy.engine.Engine - INFO - 
+DROP TABLE users
+2025-02-23 16:02:25,525 - sqlalchemy.engine.Engine - INFO - [no key 0.00034s] {}
+2025-02-23 16:02:25,535 - sqlalchemy.engine.Engine - INFO - 
+DROP TABLE spots
+2025-02-23 16:02:25,535 - sqlalchemy.engine.Engine - INFO - [no key 0.00045s] {}
+2025-02-23 16:02:25,544 - sqlalchemy.engine.Engine - INFO - 
+DROP TABLE micchi
+2025-02-23 16:02:25,544 - sqlalchemy.engine.Engine - INFO - [no key 0.00051s] {}
+2025-02-23 16:02:25,552 - sqlalchemy.engine.Engine - INFO - COMMIT
+2025-02-23 16:02:25,552 - sqlalchemy.engine.Engine - INFO - BEGIN (implicit)
+2025-02-23 16:02:25,553 - sqlalchemy.engine.Engine - INFO - DESCRIBE `mmm_db`.`micchi`
+2025-02-23 16:02:25,553 - sqlalchemy.engine.Engine - INFO - [raw sql] {}
+2025-02-23 16:02:25,554 - sqlalchemy.engine.Engine - INFO - DESCRIBE `mmm_db`.`spots`
+2025-02-23 16:02:25,554 - sqlalchemy.engine.Engine - INFO - [raw sql] {}
+2025-02-23 16:02:25,555 - sqlalchemy.engine.Engine - INFO - DESCRIBE `mmm_db`.`users`
+2025-02-23 16:02:25,555 - sqlalchemy.engine.Engine - INFO - [raw sql] {}
+2025-02-23 16:02:25,555 - sqlalchemy.engine.Engine - INFO - DESCRIBE `mmm_db`.`user_spots`
+2025-02-23 16:02:25,556 - sqlalchemy.engine.Engine - INFO - [raw sql] {}
+2025-02-23 16:02:25,556 - sqlalchemy.engine.Engine - INFO - DESCRIBE `mmm_db`.`posts`
+2025-02-23 16:02:25,557 - sqlalchemy.engine.Engine - INFO - [raw sql] {}
+2025-02-23 16:02:25,557 - sqlalchemy.engine.Engine - INFO - 
+CREATE TABLE micchi (
+	id INTEGER NOT NULL AUTO_INCREMENT, 
+	micchi VARCHAR(255), 
+	PRIMARY KEY (id)
+)
+
+
+2025-02-23 16:02:25,558 - sqlalchemy.engine.Engine - INFO - [no key 0.00021s] {}
+2025-02-23 16:02:25,566 - sqlalchemy.engine.Engine - INFO - CREATE INDEX ix_micchi_micchi ON micchi (micchi)
+2025-02-23 16:02:25,566 - sqlalchemy.engine.Engine - INFO - [no key 0.00034s] {}
+2025-02-23 16:02:25,577 - sqlalchemy.engine.Engine - INFO - CREATE INDEX ix_micchi_id ON micchi (id)
+2025-02-23 16:02:25,577 - sqlalchemy.engine.Engine - INFO - [no key 0.00034s] {}
+2025-02-23 16:02:25,584 - sqlalchemy.engine.Engine - INFO - 
+CREATE TABLE spots (
+	id INTEGER NOT NULL AUTO_INCREMENT, 
+	name VARCHAR(255), 
+	lat DECIMAL(9, 6), 
+	lon DECIMAL(9, 6), 
+	PRIMARY KEY (id)
+)
+
+
+2025-02-23 16:02:25,585 - sqlalchemy.engine.Engine - INFO - [no key 0.00035s] {}
+2025-02-23 16:02:25,598 - sqlalchemy.engine.Engine - INFO - CREATE INDEX ix_spots_id ON spots (id)
+2025-02-23 16:02:25,598 - sqlalchemy.engine.Engine - INFO - [no key 0.00036s] {}
+2025-02-23 16:02:25,605 - sqlalchemy.engine.Engine - INFO - CREATE INDEX ix_spots_name ON spots (name)
+2025-02-23 16:02:25,605 - sqlalchemy.engine.Engine - INFO - [no key 0.00027s] {}
+2025-02-23 16:02:25,611 - sqlalchemy.engine.Engine - INFO - CREATE INDEX ix_spots_lat ON spots (lat)
+2025-02-23 16:02:25,611 - sqlalchemy.engine.Engine - INFO - [no key 0.00029s] {}
+2025-02-23 16:02:25,619 - sqlalchemy.engine.Engine - INFO - CREATE INDEX ix_spots_lon ON spots (lon)
+2025-02-23 16:02:25,619 - sqlalchemy.engine.Engine - INFO - [no key 0.00037s] {}
+2025-02-23 16:02:25,627 - sqlalchemy.engine.Engine - INFO - 
+CREATE TABLE users (
+	id INTEGER NOT NULL AUTO_INCREMENT, 
+	uid VARCHAR(255), 
+	name VARCHAR(255), 
+	email VARCHAR(255), 
+	PRIMARY KEY (id)
+)
+
+
+2025-02-23 16:02:25,627 - sqlalchemy.engine.Engine - INFO - [no key 0.00030s] {}
+2025-02-23 16:02:25,637 - sqlalchemy.engine.Engine - INFO - CREATE INDEX ix_users_name ON users (name)
+2025-02-23 16:02:25,638 - sqlalchemy.engine.Engine - INFO - [no key 0.00035s] {}
+2025-02-23 16:02:25,646 - sqlalchemy.engine.Engine - INFO - CREATE INDEX ix_users_id ON users (id)
+2025-02-23 16:02:25,646 - sqlalchemy.engine.Engine - INFO - [no key 0.00034s] {}
+2025-02-23 16:02:25,653 - sqlalchemy.engine.Engine - INFO - CREATE UNIQUE INDEX ix_users_uid ON users (uid)
+2025-02-23 16:02:25,654 - sqlalchemy.engine.Engine - INFO - [no key 0.00034s] {}
+2025-02-23 16:02:25,661 - sqlalchemy.engine.Engine - INFO - CREATE UNIQUE INDEX ix_users_email ON users (email)
+2025-02-23 16:02:25,661 - sqlalchemy.engine.Engine - INFO - [no key 0.00034s] {}
+2025-02-23 16:02:25,671 - sqlalchemy.engine.Engine - INFO - 
+CREATE TABLE posts (
+	id INTEGER NOT NULL AUTO_INCREMENT, 
+	img_file_name VARCHAR(255), 
+	gps_lat DECIMAL(9, 6), 
+	gps_lon DECIMAL(9, 6), 
+	comment TEXT, 
+	image_description TEXT, 
+	haiku VARCHAR(225), 
+	level INTEGER, 
+	user_uid VARCHAR(255), 
+	near_spot_id INTEGER, 
+	created_at DATETIME DEFAULT (now()), 
+	PRIMARY KEY (id)
+)
+
+
+2025-02-23 16:02:25,671 - sqlalchemy.engine.Engine - INFO - [no key 0.00029s] {}
+2025-02-23 16:02:25,681 - sqlalchemy.engine.Engine - INFO - CREATE INDEX ix_posts_gps_lat ON posts (gps_lat)
+2025-02-23 16:02:25,681 - sqlalchemy.engine.Engine - INFO - [no key 0.00027s] {}
+2025-02-23 16:02:25,690 - sqlalchemy.engine.Engine - INFO - CREATE INDEX ix_posts_id ON posts (id)
+2025-02-23 16:02:25,690 - sqlalchemy.engine.Engine - INFO - [no key 0.00035s] {}
+2025-02-23 16:02:25,697 - sqlalchemy.engine.Engine - INFO - CREATE INDEX ix_posts_img_file_name ON posts (img_file_name)
+2025-02-23 16:02:25,698 - sqlalchemy.engine.Engine - INFO - [no key 0.00029s] {}
+2025-02-23 16:02:25,707 - sqlalchemy.engine.Engine - INFO - CREATE INDEX ix_posts_gps_lon ON posts (gps_lon)
+2025-02-23 16:02:25,707 - sqlalchemy.engine.Engine - INFO - [no key 0.00035s] {}
+2025-02-23 16:02:25,714 - sqlalchemy.engine.Engine - INFO - CREATE INDEX ix_posts_user_uid ON posts (user_uid)
+2025-02-23 16:02:25,714 - sqlalchemy.engine.Engine - INFO - [no key 0.00028s] {}
+2025-02-23 16:02:25,724 - sqlalchemy.engine.Engine - INFO - 
+CREATE TABLE user_spots (
+	id INTEGER NOT NULL AUTO_INCREMENT, 
+	user_uid VARCHAR(255), 
+	spot_id INTEGER, 
+	is_achieved BOOL, 
+	PRIMARY KEY (id), 
+	FOREIGN KEY(user_uid) REFERENCES users (uid), 
+	FOREIGN KEY(spot_id) REFERENCES spots (id)
+)
+
+
+2025-02-23 16:02:25,724 - sqlalchemy.engine.Engine - INFO - [no key 0.00025s] {}
+2025-02-23 16:02:25,736 - sqlalchemy.engine.Engine - INFO - CREATE INDEX ix_user_spots_id ON user_spots (id)
+2025-02-23 16:02:25,737 - sqlalchemy.engine.Engine - INFO - [no key 0.00023s] {}
+2025-02-23 16:02:25,742 - sqlalchemy.engine.Engine - INFO - CREATE INDEX ix_user_spots_is_achieved ON user_spots (is_achieved)
+2025-02-23 16:02:25,742 - sqlalchemy.engine.Engine - INFO - [no key 0.00028s] {}
+2025-02-23 16:02:25,751 - sqlalchemy.engine.Engine - INFO - CREATE INDEX ix_user_spots_user_uid ON user_spots (user_uid)
+2025-02-23 16:02:25,751 - sqlalchemy.engine.Engine - INFO - [no key 0.00029s] {}
+2025-02-23 16:02:25,759 - sqlalchemy.engine.Engine - INFO - CREATE INDEX ix_user_spots_spot_id ON user_spots (spot_id)
+2025-02-23 16:02:25,760 - sqlalchemy.engine.Engine - INFO - [no key 0.00027s] {}
+2025-02-23 16:02:25,766 - sqlalchemy.engine.Engine - INFO - COMMIT
+2025-02-23 16:02:25,771 - sqlalchemy.engine.Engine - INFO - BEGIN (implicit)
+2025-02-23 16:02:25,772 - sqlalchemy.engine.Engine - INFO - INSERT INTO spots (name, lat, lon) VALUES (%(name)s, %(lat)s, %(lon)s)
+2025-02-23 16:02:25,773 - sqlalchemy.engine.Engine - INFO - [generated in 0.00021s] {'name': '上鷺東公園', 'lat': 35.729803, 'lon': 139.6346839}
+2025-02-23 16:02:25,774 - sqlalchemy.engine.Engine - INFO - INSERT INTO spots (name, lat, lon) VALUES (%(name)s, %(lat)s, %(lon)s)
+2025-02-23 16:02:25,774 - sqlalchemy.engine.Engine - INFO - [cached since 0.001328s ago] {'name': '上鷺宮の願掛け地蔵尊', 'lat': 35.7315295, 'lon': 139.6311827}
+2025-02-23 16:02:25,774 - sqlalchemy.engine.Engine - INFO - INSERT INTO spots (name, lat, lon) VALUES (%(name)s, %(lat)s, %(lon)s)
+2025-02-23 16:02:25,774 - sqlalchemy.engine.Engine - INFO - [cached since 0.002038s ago] {'name': '中野区立若葉公園', 'lat': 35.6835694, 'lon': 139.7219424}
+2025-02-23 16:02:25,775 - sqlalchemy.engine.Engine - INFO - INSERT INTO spots (name, lat, lon) VALUES (%(name)s, %(lat)s, %(lon)s)
+2025-02-23 16:02:25,775 - sqlalchemy.engine.Engine - INFO - [cached since 0.002661s ago] {'name': '王立学院', 'lat': 35.72448, 'lon': 139.635473}
+2025-02-23 16:02:25,776 - sqlalchemy.engine.Engine - INFO - INSERT INTO spots (name, lat, lon) VALUES (%(name)s, %(lat)s, %(lon)s)
+2025-02-23 16:02:25,776 - sqlalchemy.engine.Engine - INFO - [cached since 0.003275s ago] {'name': '鷺宮八幡宮', 'lat': 35.7244182, 'lon': 139.6362829}
+2025-02-23 16:02:25,776 - sqlalchemy.engine.Engine - INFO - INSERT INTO spots (name, lat, lon) VALUES (%(name)s, %(lat)s, %(lon)s)
+2025-02-23 16:02:25,776 - sqlalchemy.engine.Engine - INFO - [cached since 0.003967s ago] {'name': '中野区立若葉公園', 'lat': 35.6835694, 'lon': 139.7219424}
+2025-02-23 16:02:25,777 - sqlalchemy.engine.Engine - INFO - INSERT INTO spots (name, lat, lon) VALUES (%(name)s, %(lat)s, %(lon)s)
+2025-02-23 16:02:25,778 - sqlalchemy.engine.Engine - INFO - [cached since 0.005648s ago] {'name': '福蔵院', 'lat': 35.7215231, 'lon': 139.6387916}
+2025-02-23 16:02:25,779 - sqlalchemy.engine.Engine - INFO - INSERT INTO spots (name, lat, lon) VALUES (%(name)s, %(lat)s, %(lon)s)
+2025-02-23 16:02:25,780 - sqlalchemy.engine.Engine - INFO - [cached since 0.007052s ago] {'name': '浄円寺', 'lat': 335.7224743, 'lon': 139.6435392}
+2025-02-23 16:02:25,780 - sqlalchemy.engine.Engine - INFO - INSERT INTO spots (name, lat, lon) VALUES (%(name)s, %(lat)s, %(lon)s)
+2025-02-23 16:02:25,780 - sqlalchemy.engine.Engine - INFO - [cached since 0.007734s ago] {'name': 'かせいチャンモニュメント', 'lat': 35.7222116, 'lon': 139.6444276}
+2025-02-23 16:02:25,781 - sqlalchemy.engine.Engine - INFO - INSERT INTO spots (name, lat, lon) VALUES (%(name)s, %(lat)s, %(lon)s)
+2025-02-23 16:02:25,781 - sqlalchemy.engine.Engine - INFO - [cached since 0.008906s ago] {'name': '大和町八幡神社', 'lat': 35.7141738, 'lon': 139.650571}
+2025-02-23 16:02:25,782 - sqlalchemy.engine.Engine - INFO - INSERT INTO spots (name, lat, lon) VALUES (%(name)s, %(lat)s, %(lon)s)
+2025-02-23 16:02:25,782 - sqlalchemy.engine.Engine - INFO - [cached since 0.009549s ago] {'name': '蓮華寺', 'lat': 35.0641867, 'lon': 135.7997156}
+2025-02-23 16:02:25,783 - sqlalchemy.engine.Engine - INFO - INSERT INTO spots (name, lat, lon) VALUES (%(name)s, %(lat)s, %(lon)s)
+2025-02-23 16:02:25,783 - sqlalchemy.engine.Engine - INFO - [cached since 0.01064s ago] {'name': '丸山公園', 'lat': 35.7251527, 'lon': 139.6503375}
+2025-02-23 16:02:25,784 - sqlalchemy.engine.Engine - INFO - INSERT INTO spots (name, lat, lon) VALUES (%(name)s, %(lat)s, %(lon)s)
+2025-02-23 16:02:25,784 - sqlalchemy.engine.Engine - INFO - [cached since 0.01148s ago] {'name': '二代目武道家', 'lat': 35.70401209110524, 'lon': 139.6653165321019}
+2025-02-23 16:02:25,784 - sqlalchemy.engine.Engine - INFO - INSERT INTO spots (name, lat, lon) VALUES (%(name)s, %(lat)s, %(lon)s)
+2025-02-23 16:02:25,785 - sqlalchemy.engine.Engine - INFO - [cached since 0.01237s ago] {'name': '野方駅前商店街', 'lat': 35.714299, 'lon': 139.6566879}
+2025-02-23 16:02:25,786 - sqlalchemy.engine.Engine - INFO - INSERT INTO spots (name, lat, lon) VALUES (%(name)s, %(lat)s, %(lon)s)
+2025-02-23 16:02:25,786 - sqlalchemy.engine.Engine - INFO - [cached since 0.01378s ago] {'name': '野方配水塔', 'lat': 35.7247008, 'lon': 139.6748782}
+2025-02-23 16:02:25,787 - sqlalchemy.engine.Engine - INFO - INSERT INTO spots (name, lat, lon) VALUES (%(name)s, %(lat)s, %(lon)s)
+2025-02-23 16:02:25,787 - sqlalchemy.engine.Engine - INFO - [cached since 0.01461s ago] {'name': '江古田の森公園', 'lat': 35.7308959, 'lon': 139.665864}
+2025-02-23 16:02:25,788 - sqlalchemy.engine.Engine - INFO - INSERT INTO spots (name, lat, lon) VALUES (%(name)s, %(lat)s, %(lon)s)
+2025-02-23 16:02:25,788 - sqlalchemy.engine.Engine - INFO - [cached since 0.01572s ago] {'name': '江古田氷川神社', 'lat': 35.7273099, 'lon': 139.6666561}
+2025-02-23 16:02:25,789 - sqlalchemy.engine.Engine - INFO - INSERT INTO spots (name, lat, lon) VALUES (%(name)s, %(lat)s, %(lon)s)
+2025-02-23 16:02:25,789 - sqlalchemy.engine.Engine - INFO - [cached since 0.01656s ago] {'name': '江原公園', 'lat': 35.1215403, 'lon': 138.8606261}
+2025-02-23 16:02:25,789 - sqlalchemy.engine.Engine - INFO - INSERT INTO spots (name, lat, lon) VALUES (%(name)s, %(lat)s, %(lon)s)
+2025-02-23 16:02:25,790 - sqlalchemy.engine.Engine - INFO - [cached since 0.01722s ago] {'name': '北江古田遺跡', 'lat': 35.7301158, 'lon': 139.6675392}
+2025-02-23 16:02:25,790 - sqlalchemy.engine.Engine - INFO - INSERT INTO spots (name, lat, lon) VALUES (%(name)s, %(lat)s, %(lon)s)
+2025-02-23 16:02:25,790 - sqlalchemy.engine.Engine - INFO - [cached since 0.01787s ago] {'name': '沼袋氷川神社', 'lat': 35.719525, 'lon': 139.6669306}
+2025-02-23 16:02:25,791 - sqlalchemy.engine.Engine - INFO - INSERT INTO spots (name, lat, lon) VALUES (%(name)s, %(lat)s, %(lon)s)
+2025-02-23 16:02:25,791 - sqlalchemy.engine.Engine - INFO - [cached since 0.0185s ago] {'name': '百観音明治寺', 'lat': 35.72206990000001, 'lon': 139.6638953}
+2025-02-23 16:02:25,792 - sqlalchemy.engine.Engine - INFO - INSERT INTO spots (name, lat, lon) VALUES (%(name)s, %(lat)s, %(lon)s)
+2025-02-23 16:02:25,792 - sqlalchemy.engine.Engine - INFO - [cached since 0.01921s ago] {'name': '北野神社', 'lat': 35.0311737, 'lon': 135.7351227}
+2025-02-23 16:02:25,792 - sqlalchemy.engine.Engine - INFO - INSERT INTO spots (name, lat, lon) VALUES (%(name)s, %(lat)s, %(lon)s)
+2025-02-23 16:02:25,793 - sqlalchemy.engine.Engine - INFO - [cached since 0.02012s ago] {'name': '哲学堂公園', 'lat': 35.7220573, 'lon': 139.6742974}
+2025-02-23 16:02:25,794 - sqlalchemy.engine.Engine - INFO - INSERT INTO spots (name, lat, lon) VALUES (%(name)s, %(lat)s, %(lon)s)
+2025-02-23 16:02:25,794 - sqlalchemy.engine.Engine - INFO - [cached since 0.02193s ago] {'name': '平和の森公園', 'lat': 35.5826957, 'lon': 139.7390173}
+2025-02-23 16:02:25,795 - sqlalchemy.engine.Engine - INFO - INSERT INTO spots (name, lat, lon) VALUES (%(name)s, %(lat)s, %(lon)s)
+2025-02-23 16:02:25,795 - sqlalchemy.engine.Engine - INFO - [cached since 0.02271s ago] {'name': '梅照院', 'lat': 35.7140296, 'lon': 139.6675432}
+2025-02-23 16:02:25,796 - sqlalchemy.engine.Engine - INFO - INSERT INTO spots (name, lat, lon) VALUES (%(name)s, %(lat)s, %(lon)s)
+2025-02-23 16:02:25,796 - sqlalchemy.engine.Engine - INFO - [cached since 0.02331s ago] {'name': '宗清寺', 'lat': 35.7086273, 'lon': 139.6774274}
+2025-02-23 16:02:25,796 - sqlalchemy.engine.Engine - INFO - INSERT INTO spots (name, lat, lon) VALUES (%(name)s, %(lat)s, %(lon)s)
+2025-02-23 16:02:25,796 - sqlalchemy.engine.Engine - INFO - [cached since 0.02389s ago] {'name': '上高田氷川神社', 'lat': 35.7148747, 'lon': 139.6763225}
+2025-02-23 16:02:25,797 - sqlalchemy.engine.Engine - INFO - INSERT INTO spots (name, lat, lon) VALUES (%(name)s, %(lat)s, %(lon)s)
+2025-02-23 16:02:25,797 - sqlalchemy.engine.Engine - INFO - [cached since 0.02454s ago] {'name': '中野四季の森公園', 'lat': 35.7078416, 'lon': 139.6614172}
+2025-02-23 16:02:25,798 - sqlalchemy.engine.Engine - INFO - INSERT INTO spots (name, lat, lon) VALUES (%(name)s, %(lat)s, %(lon)s)
+2025-02-23 16:02:25,798 - sqlalchemy.engine.Engine - INFO - [cached since 0.02563s ago] {'name': '中のレンガ坂', 'lat': 35.7050673, 'lon': 139.6647581}
+2025-02-23 16:02:25,799 - sqlalchemy.engine.Engine - INFO - INSERT INTO spots (name, lat, lon) VALUES (%(name)s, %(lat)s, %(lon)s)
+2025-02-23 16:02:25,799 - sqlalchemy.engine.Engine - INFO - [cached since 0.02683s ago] {'name': 'ムーンロード', 'lat': 34.8306776, 'lon': 139.0752297}
+2025-02-23 16:02:25,800 - sqlalchemy.engine.Engine - INFO - INSERT INTO spots (name, lat, lon) VALUES (%(name)s, %(lat)s, %(lon)s)
+2025-02-23 16:02:25,800 - sqlalchemy.engine.Engine - INFO - [cached since 0.02768s ago] {'name': '神田川沿いの桜並木', 'lat': 35.69915747004764, 'lon': 139.766569741022}
+2025-02-23 16:02:25,801 - sqlalchemy.engine.Engine - INFO - INSERT INTO spots (name, lat, lon) VALUES (%(name)s, %(lat)s, %(lon)s)
+2025-02-23 16:02:25,801 - sqlalchemy.engine.Engine - INFO - [cached since 0.02828s ago] {'name': '白玉稲荷神社', 'lat': 35.6982609, 'lon': 139.6826578}
+2025-02-23 16:02:25,801 - sqlalchemy.engine.Engine - INFO - INSERT INTO spots (name, lat, lon) VALUES (%(name)s, %(lat)s, %(lon)s)
+2025-02-23 16:02:25,801 - sqlalchemy.engine.Engine - INFO - [cached since 0.02894s ago] {'name': '徳蔵寺', 'lat': 34.0640085, 'lon': 134.4462388}
+2025-02-23 16:02:25,802 - sqlalchemy.engine.Engine - INFO - INSERT INTO spots (name, lat, lon) VALUES (%(name)s, %(lat)s, %(lon)s)
+2025-02-23 16:02:25,802 - sqlalchemy.engine.Engine - INFO - [cached since 0.02969s ago] {'name': '本町氷川神社', 'lat': 35.6853521, 'lon': 139.6761067}
+2025-02-23 16:02:25,803 - sqlalchemy.engine.Engine - INFO - INSERT INTO spots (name, lat, lon) VALUES (%(name)s, %(lat)s, %(lon)s)
+2025-02-23 16:02:25,803 - sqlalchemy.engine.Engine - INFO - [cached since 0.03034s ago] {'name': '本町公園', 'lat': 34.2360153, 'lon': 135.175742}
+2025-02-23 16:02:25,803 - sqlalchemy.engine.Engine - INFO - INSERT INTO spots (name, lat, lon) VALUES (%(name)s, %(lat)s, %(lon)s)
+2025-02-23 16:02:25,804 - sqlalchemy.engine.Engine - INFO - [cached since 0.03115s ago] {'name': '神明氷川神社', 'lat': 35.6868506, 'lon': 139.6700722}
+2025-02-23 16:02:25,804 - sqlalchemy.engine.Engine - INFO - INSERT INTO spots (name, lat, lon) VALUES (%(name)s, %(lat)s, %(lon)s)
+2025-02-23 16:02:25,805 - sqlalchemy.engine.Engine - INFO - [cached since 0.03213s ago] {'name': '藤神稲荷神社', 'lat': 35.6909588, 'lon': 139.6749005}
+2025-02-23 16:02:25,805 - sqlalchemy.engine.Engine - INFO - INSERT INTO spots (name, lat, lon) VALUES (%(name)s, %(lat)s, %(lon)s)
+2025-02-23 16:02:25,805 - sqlalchemy.engine.Engine - INFO - [cached since 0.03273s ago] {'name': '寳福寺', 'lat': 34.691389, 'lon': 133.7341946}
+2025-02-23 16:02:25,806 - sqlalchemy.engine.Engine - INFO - INSERT INTO spots (name, lat, lon) VALUES (%(name)s, %(lat)s, %(lon)s)
+2025-02-23 16:02:25,806 - sqlalchemy.engine.Engine - INFO - [cached since 0.03329s ago] {'name': '南台いちょう公園', 'lat': 35.6848143, 'lon': 139.6731991}
+2025-02-23 16:02:25,807 - sqlalchemy.engine.Engine - INFO - COMMIT
+2025-02-23 16:02:25,809 - sqlalchemy.engine.Engine - INFO - BEGIN (implicit)
+2025-02-23 16:02:25,809 - sqlalchemy.engine.Engine - INFO - -- スポット
+INSERT INTO users (uid, name, email) VALUES ('guest', 'ゲスト', 'guest@unknown.com')
+2025-02-23 16:02:25,809 - sqlalchemy.engine.Engine - INFO - [generated in 0.00049s] {}
+2025-02-23 16:02:25,811 - sqlalchemy.engine.Engine - INFO - 
+INSERT INTO user_spots (user_uid, spot_id, is_achieved) VALUES ('guest', 1, 0)
+2025-02-23 16:02:25,811 - sqlalchemy.engine.Engine - INFO - [generated in 0.00043s] {}
+2025-02-23 16:02:25,812 - sqlalchemy.engine.Engine - INFO - 
+INSERT INTO user_spots (user_uid, spot_id, is_achieved) VALUES ('guest', 2, 0)
+2025-02-23 16:02:25,812 - sqlalchemy.engine.Engine - INFO - [generated in 0.00021s] {}
+2025-02-23 16:02:25,813 - sqlalchemy.engine.Engine - INFO - 
+INSERT INTO user_spots (user_uid, spot_id, is_achieved) VALUES ('guest', 3, 0)
+2025-02-23 16:02:25,813 - sqlalchemy.engine.Engine - INFO - [generated in 0.00022s] {}
+2025-02-23 16:02:25,814 - sqlalchemy.engine.Engine - INFO - 
+INSERT INTO user_spots (user_uid, spot_id, is_achieved) VALUES ('guest', 4, 0)
+2025-02-23 16:02:25,814 - sqlalchemy.engine.Engine - INFO - [generated in 0.00028s] {}
+2025-02-23 16:02:25,814 - sqlalchemy.engine.Engine - INFO - 
+INSERT INTO user_spots (user_uid, spot_id, is_achieved) VALUES ('guest', 5, 0)
+2025-02-23 16:02:25,815 - sqlalchemy.engine.Engine - INFO - [generated in 0.00038s] {}
+2025-02-23 16:02:25,815 - sqlalchemy.engine.Engine - INFO - 
+INSERT INTO user_spots (user_uid, spot_id, is_achieved) VALUES ('guest', 6, 0)
+2025-02-23 16:02:25,816 - sqlalchemy.engine.Engine - INFO - [generated in 0.00026s] {}
+2025-02-23 16:02:25,816 - sqlalchemy.engine.Engine - INFO - 
+INSERT INTO user_spots (user_uid, spot_id, is_achieved) VALUES ('guest', 7, 0)
+2025-02-23 16:02:25,816 - sqlalchemy.engine.Engine - INFO - [generated in 0.00021s] {}
+2025-02-23 16:02:25,817 - sqlalchemy.engine.Engine - INFO - 
+INSERT INTO user_spots (user_uid, spot_id, is_achieved) VALUES ('guest', 8, 0)
+2025-02-23 16:02:25,817 - sqlalchemy.engine.Engine - INFO - [generated in 0.00028s] {}
+2025-02-23 16:02:25,817 - sqlalchemy.engine.Engine - INFO - 
+INSERT INTO user_spots (user_uid, spot_id, is_achieved) VALUES ('guest', 9, 0)
+2025-02-23 16:02:25,818 - sqlalchemy.engine.Engine - INFO - [generated in 0.00021s] {}
+2025-02-23 16:02:25,818 - sqlalchemy.engine.Engine - INFO - 
+INSERT INTO user_spots (user_uid, spot_id, is_achieved) VALUES ('guest', 10, 0)
+2025-02-23 16:02:25,818 - sqlalchemy.engine.Engine - INFO - [generated in 0.00023s] {}
+2025-02-23 16:02:25,819 - sqlalchemy.engine.Engine - INFO - 
+INSERT INTO user_spots (user_uid, spot_id, is_achieved) VALUES ('guest', 11, 0)
+2025-02-23 16:02:25,819 - sqlalchemy.engine.Engine - INFO - [generated in 0.00021s] {}
+2025-02-23 16:02:25,820 - sqlalchemy.engine.Engine - INFO - 
+INSERT INTO user_spots (user_uid, spot_id, is_achieved) VALUES ('guest', 12, 0)
+2025-02-23 16:02:25,820 - sqlalchemy.engine.Engine - INFO - [generated in 0.00051s] {}
+2025-02-23 16:02:25,821 - sqlalchemy.engine.Engine - INFO - 
+INSERT INTO user_spots (user_uid, spot_id, is_achieved) VALUES ('guest', 13, 0)
+2025-02-23 16:02:25,821 - sqlalchemy.engine.Engine - INFO - [generated in 0.00019s] {}
+2025-02-23 16:02:25,821 - sqlalchemy.engine.Engine - INFO - 
+INSERT INTO user_spots (user_uid, spot_id, is_achieved) VALUES ('guest', 14, 0)
+2025-02-23 16:02:25,822 - sqlalchemy.engine.Engine - INFO - [generated in 0.00028s] {}
+2025-02-23 16:02:25,822 - sqlalchemy.engine.Engine - INFO - 
+INSERT INTO user_spots (user_uid, spot_id, is_achieved) VALUES ('guest', 15, 0)
+2025-02-23 16:02:25,823 - sqlalchemy.engine.Engine - INFO - [generated in 0.00025s] {}
+2025-02-23 16:02:25,823 - sqlalchemy.engine.Engine - INFO - 
+INSERT INTO user_spots (user_uid, spot_id, is_achieved) VALUES ('guest', 16, 0)
+2025-02-23 16:02:25,823 - sqlalchemy.engine.Engine - INFO - [generated in 0.00019s] {}
+2025-02-23 16:02:25,824 - sqlalchemy.engine.Engine - INFO - 
+INSERT INTO user_spots (user_uid, spot_id, is_achieved) VALUES ('guest', 17, 0)
+2025-02-23 16:02:25,824 - sqlalchemy.engine.Engine - INFO - [generated in 0.00021s] {}
+2025-02-23 16:02:25,824 - sqlalchemy.engine.Engine - INFO - 
+INSERT INTO user_spots (user_uid, spot_id, is_achieved) VALUES ('guest', 18, 0)
+2025-02-23 16:02:25,825 - sqlalchemy.engine.Engine - INFO - [generated in 0.00033s] {}
+2025-02-23 16:02:25,825 - sqlalchemy.engine.Engine - INFO - 
+INSERT INTO user_spots (user_uid, spot_id, is_achieved) VALUES ('guest', 19, 0)
+2025-02-23 16:02:25,826 - sqlalchemy.engine.Engine - INFO - [generated in 0.00035s] {}
+2025-02-23 16:02:25,827 - sqlalchemy.engine.Engine - INFO - 
+INSERT INTO user_spots (user_uid, spot_id, is_achieved) VALUES ('guest', 20, 0)
+2025-02-23 16:02:25,827 - sqlalchemy.engine.Engine - INFO - [generated in 0.00028s] {}
+2025-02-23 16:02:25,828 - sqlalchemy.engine.Engine - INFO - 
+INSERT INTO user_spots (user_uid, spot_id, is_achieved) VALUES ('guest', 21, 0)
+2025-02-23 16:02:25,828 - sqlalchemy.engine.Engine - INFO - [generated in 0.00021s] {}
+2025-02-23 16:02:25,829 - sqlalchemy.engine.Engine - INFO - 
+INSERT INTO user_spots (user_uid, spot_id, is_achieved) VALUES ('guest', 22, 0)
+2025-02-23 16:02:25,829 - sqlalchemy.engine.Engine - INFO - [generated in 0.00023s] {}
+2025-02-23 16:02:25,830 - sqlalchemy.engine.Engine - INFO - 
+INSERT INTO user_spots (user_uid, spot_id, is_achieved) VALUES ('guest', 23, 0)
+2025-02-23 16:02:25,830 - sqlalchemy.engine.Engine - INFO - [generated in 0.00048s] {}
+2025-02-23 16:02:25,831 - sqlalchemy.engine.Engine - INFO - 
+INSERT INTO user_spots (user_uid, spot_id, is_achieved) VALUES ('guest', 24, 0)
+2025-02-23 16:02:25,832 - sqlalchemy.engine.Engine - INFO - [generated in 0.00029s] {}
+2025-02-23 16:02:25,832 - sqlalchemy.engine.Engine - INFO - 
+INSERT INTO user_spots (user_uid, spot_id, is_achieved) VALUES ('guest', 25, 0)
+2025-02-23 16:02:25,832 - sqlalchemy.engine.Engine - INFO - [generated in 0.00023s] {}
+2025-02-23 16:02:25,833 - sqlalchemy.engine.Engine - INFO - 
+INSERT INTO user_spots (user_uid, spot_id, is_achieved) VALUES ('guest', 26, 0)
+2025-02-23 16:02:25,833 - sqlalchemy.engine.Engine - INFO - [generated in 0.00018s] {}
+2025-02-23 16:02:25,833 - sqlalchemy.engine.Engine - INFO - 
+INSERT INTO user_spots (user_uid, spot_id, is_achieved) VALUES ('guest', 27, 0)
+2025-02-23 16:02:25,834 - sqlalchemy.engine.Engine - INFO - [generated in 0.00015s] {}
+2025-02-23 16:02:25,834 - sqlalchemy.engine.Engine - INFO - 
+INSERT INTO user_spots (user_uid, spot_id, is_achieved) VALUES ('guest', 28, 0)
+2025-02-23 16:02:25,834 - sqlalchemy.engine.Engine - INFO - [generated in 0.00016s] {}
+2025-02-23 16:02:25,835 - sqlalchemy.engine.Engine - INFO - 
+INSERT INTO user_spots (user_uid, spot_id, is_achieved) VALUES ('guest', 29, 0)
+2025-02-23 16:02:25,835 - sqlalchemy.engine.Engine - INFO - [generated in 0.00028s] {}
+2025-02-23 16:02:25,836 - sqlalchemy.engine.Engine - INFO - 
+INSERT INTO user_spots (user_uid, spot_id, is_achieved) VALUES ('guest', 30, 0)
+2025-02-23 16:02:25,836 - sqlalchemy.engine.Engine - INFO - [generated in 0.00031s] {}
+2025-02-23 16:02:25,837 - sqlalchemy.engine.Engine - INFO - 
+INSERT INTO user_spots (user_uid, spot_id, is_achieved) VALUES ('guest', 31, 0)
+2025-02-23 16:02:25,837 - sqlalchemy.engine.Engine - INFO - [generated in 0.00024s] {}
+2025-02-23 16:02:25,838 - sqlalchemy.engine.Engine - INFO - 
+INSERT INTO user_spots (user_uid, spot_id, is_achieved) VALUES ('guest', 32, 0)
+2025-02-23 16:02:25,838 - sqlalchemy.engine.Engine - INFO - [generated in 0.00023s] {}
+2025-02-23 16:02:25,838 - sqlalchemy.engine.Engine - INFO - 
+INSERT INTO user_spots (user_uid, spot_id, is_achieved) VALUES ('guest', 33, 0)
+2025-02-23 16:02:25,839 - sqlalchemy.engine.Engine - INFO - [generated in 0.00022s] {}
+2025-02-23 16:02:25,839 - sqlalchemy.engine.Engine - INFO - 
+INSERT INTO user_spots (user_uid, spot_id, is_achieved) VALUES ('guest', 34, 0)
+2025-02-23 16:02:25,840 - sqlalchemy.engine.Engine - INFO - [generated in 0.00056s] {}
+2025-02-23 16:02:25,841 - sqlalchemy.engine.Engine - INFO - 
+INSERT INTO user_spots (user_uid, spot_id, is_achieved) VALUES ('guest', 35, 0)
+2025-02-23 16:02:25,841 - sqlalchemy.engine.Engine - INFO - [generated in 0.00023s] {}
+2025-02-23 16:02:25,842 - sqlalchemy.engine.Engine - INFO - 
+INSERT INTO user_spots (user_uid, spot_id, is_achieved) VALUES ('guest', 36, 0)
+2025-02-23 16:02:25,842 - sqlalchemy.engine.Engine - INFO - [generated in 0.00036s] {}
+2025-02-23 16:02:25,844 - sqlalchemy.engine.Engine - INFO - 
+INSERT INTO user_spots (user_uid, spot_id, is_achieved) VALUES ('guest', 37, 0)
+2025-02-23 16:02:25,844 - sqlalchemy.engine.Engine - INFO - [generated in 0.00031s] {}
+2025-02-23 16:02:25,845 - sqlalchemy.engine.Engine - INFO - 
+INSERT INTO user_spots (user_uid, spot_id, is_achieved) VALUES ('guest', 38, 0)
+2025-02-23 16:02:25,846 - sqlalchemy.engine.Engine - INFO - [generated in 0.00035s] {}
+2025-02-23 16:02:25,847 - sqlalchemy.engine.Engine - INFO - 
+INSERT INTO user_spots (user_uid, spot_id, is_achieved) VALUES ('guest', 39, 0)
+2025-02-23 16:02:25,847 - sqlalchemy.engine.Engine - INFO - [generated in 0.00028s] {}
+2025-02-23 16:02:25,848 - sqlalchemy.engine.Engine - INFO - COMMIT
