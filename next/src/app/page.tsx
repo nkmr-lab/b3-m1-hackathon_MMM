@@ -2,6 +2,7 @@
 import { basePath } from '../utils/foundation';
 
 export default function Home() {
+  //test
   return (
     <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '80vh', textAlign: 'center', paddingTop: '2rem' }}>
       <img
