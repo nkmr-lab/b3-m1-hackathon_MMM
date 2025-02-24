@@ -1,6 +1,8 @@
+//コレがないと生htmlみたいになる
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-    reactStrictMode: true, // useEffectとかが2回発火する。
+    basePath: process.env.NODE_ENV === 'production' ? '/nakano-de-haiku' : '',
 };
 
 export default nextConfig;
