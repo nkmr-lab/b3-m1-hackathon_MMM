@@ -27,7 +27,7 @@ class Micchi(Base):
 class Spot(Base):
     __tablename__ = "spots"
     id = Column(Integer, primary_key=True, index=True)
-    name = Column(String(255), index=True)
+    name = Column(String(255), unique=True, index=True)
     lat = Column(DECIMAL(9, 6), index=True)
     lon = Column(DECIMAL(9, 6), index=True)
     user_spots = relationship("UserSpot", back_populates="spot") # UserSpotのspot属性に対応．tablenameではない！！
@@ -106,7 +106,7 @@ async def create_user(request: CreateUser, db: AsyncSession = Depends(get_db)):
     """新規ユーザのサインアップ時に初期データを挿入"""
     try:
         # userの追加
-        user = User(uid=request.uid, level=1, name=request.name, email=request.email)
+        user = User(uid=request.uid, name=request.name, email=request.email)
         db.add(user)
         await db.flush()
 

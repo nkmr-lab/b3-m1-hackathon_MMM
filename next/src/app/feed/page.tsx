@@ -1,5 +1,6 @@
 "use client";
 import React, { useState, useEffect } from 'react';
+import { apiRoot } from "../../utils/foundation";
 
 /**
  * このコンポーネントは投稿一覧ページを表示します。。
@@ -17,7 +18,7 @@ export default function Feed() {
   useEffect(() => {
     const fetchPosts = async () => {
       try {
-        const response = await fetch('http://localhost:8080/haiku-posts');
+        const response = await fetch(apiRoot+'/haiku-posts');
         if (!response.ok) {
           throw new Error('Network response was not ok');
         }
@@ -103,7 +104,7 @@ function HoverCard({
         }}
       >
         <img
-          src={"http://localhost:8080/image/" + post.img_file_name}
+          src={apiRoot + "/image/" + post.img_file_name}
           alt="写真"
           style={{
             width: '100%',
@@ -138,7 +139,7 @@ function HoverCard({
               key={index}
               style={{
                 writingMode: 'vertical-rl',
-                textOrientation: 'upright' as any,
+                textOrientation: 'upright',
                 margin: '0 4px',
                 alignSelf: alignSelf,
               }}

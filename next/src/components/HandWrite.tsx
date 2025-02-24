@@ -1,12 +1,12 @@
 import React, { useRef, useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { useAuth } from '../context/AuthContext';
+import { apiRoot } from "../utils/foundation";
 
 const HandWrite: React.FC = () => {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const [isDrawing, setIsDrawing] = useState(false);
   const [lastPoint, setLastPoint] = useState<{ x: number; y: number } | null>(null);
-  const [savedImage, setSavedImage] = useState<string | null>(null);
   const [canvasSize, setCanvasSize] = useState<{ width: number; height: number }>({ width: 800, height: 600 });
   const [isBgImageSelected, setIsBgImageSelected] = useState(false);
   const { user } = useAuth();
@@ -97,10 +97,9 @@ const HandWrite: React.FC = () => {
     const canvas = canvasRef.current;
     if (canvas) {
       const imageData = canvas.toDataURL('image/png');
-      setSavedImage(imageData);
 
       // 画像データをバックエンドに送信
-      const response = await fetch('http://localhost:8080/upload', {
+      const response = await fetch(apiRoot+'/upload', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

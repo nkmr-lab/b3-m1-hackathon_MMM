@@ -1,45 +1,64 @@
 "use client";
 
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import "./event.css"; // CSSファイルをインポート
 import EXIF from 'exif-js';
 import toast from 'react-hot-toast';
 import { useAuth } from '../../context/AuthContext';
 import { Button } from '../../components/ui/button';
 import { Textarea } from '../../components/ui/textarea';
+import { apiRoot } from "../../utils/foundation";
 
 /**
  * このコンポーネントはイベント紹介ページを表示します。
  * 
  * @returns {JSX.Element} イベント紹介ページのJSX要素
  */
+
+interface ExifData {
+    GPSLatitude?: [number, number, number];
+    GPSLongitude?: [number, number, number];
+    GPSLatitudeRef?: 'N' | 'S';
+    GPSLongitudeRef?: 'E' | 'W';
+}
+
 export default function Event() {
     const [haiku, setHaiku] = useState("");
     const [imageEncoded, setimageEncoded] = useState<string | null>(null);
-    const [exifData, setExifData] = useState<any>(null);
+    const [exifData, setExifData] = useState<ExifData | null>(null);
     const [gpsData, setGpsData] = useState<{ latitude: number | null, longitude: number | null }>({ latitude: null, longitude: null });
     const [text, setText] = useState(""); // ユーザー入力用のテキスト
     const [quality, setQuality] = useState(1); // 俳句のレベル
     const [isLoading, setIsLoading] = useState(false);
-    const [error, setError] = useState<string | null>(null);
     const { user } = useAuth();
 
     const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const file = event.target.files?.[0];
         if (file) {
             const reader = new FileReader();
-            reader.onloadend = () => {
+
+            reader.onloadend = () => { // getDataのコールバック内で呼ぶと動作タイミングが不安定になる
                 setimageEncoded(reader.result as string);
             };
 
             // EXIF情報を取得
-            EXIF.getData(file as any, function (this: any) {
-                const allExifData = EXIF.getAllTags(this);
+            EXIF.getData(file as unknown as string, function (this: ExifData) {
+                const allExifData = EXIF.getAllTags(this) as ExifData;
                 setExifData(allExifData);
 
                 // GPSデータの有無を確認し、取得
-                if (allExifData.GPSLatitude && allExifData.GPSLongitude && allExifData.GPSLatitudeRef && allExifData.GPSLongitudeRef) {
-                    const convertDMSToDD = (degrees: number, minutes: number, seconds: number, direction: string) => {
+                if (
+                    allExifData.GPSLatitude &&
+                    allExifData.GPSLongitude &&
+                    allExifData.GPSLatitudeRef &&
+                    allExifData.GPSLongitudeRef
+                ) {
+                    const convertDMSToDD = (
+                        degrees: number,
+                        minutes: number,
+                        seconds: number,
+                        direction: 'N' | 'S' | 'E' | 'W'
+                    ): number => {
                         let dd = degrees + minutes / 60 + seconds / 3600;
                         if (direction === 'S' || direction === 'W') {
                             dd = dd * -1;
@@ -48,11 +67,20 @@ export default function Event() {
                     };
 
                     const latitude = convertDMSToDD(
-                        allExifData.GPSLatitude[0], allExifData.GPSLatitude[1], allExifData.GPSLatitude[2], allExifData.GPSLatitudeRef
+                        allExifData.GPSLatitude[0],
+                        allExifData.GPSLatitude[1],
+                        allExifData.GPSLatitude[2],
+                        allExifData.GPSLatitudeRef
                     );
+
                     const longitude = convertDMSToDD(
-                        allExifData.GPSLongitude[0], allExifData.GPSLongitude[1], allExifData.GPSLongitude[2], allExifData.GPSLongitudeRef
+                        allExifData.GPSLongitude[0],
+                        allExifData.GPSLongitude[1],
+                        allExifData.GPSLongitude[2],
+                        allExifData.GPSLongitudeRef
                     );
+
+                    console.log("緯度：" + latitude + ",経度：" + longitude);
                     setGpsData({ latitude, longitude });
                 } else {
                     setGpsData({ latitude: null, longitude: null });
@@ -85,7 +113,7 @@ export default function Event() {
         setIsLoading(true);
 
         const fetchHaiku = async () => {
-            const response = await fetch("http://localhost:8080/haiku", {
+            const response = await fetch(apiRoot+"/haiku", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -106,8 +134,6 @@ export default function Event() {
 
             const result = await response.json();
             const haiku = result.haiku.replace(/,/g, "¥n");
-
-            console.log(haiku);
 
             setText('');
             setExifData(null);
@@ -163,9 +189,9 @@ export default function Event() {
                             📷 画像をアップロード
                         </Button>
                     </div>
-                    {imageEncoded && (
+                    {imageEncoded  && gpsData && (
                         <div style={{ marginTop: '1rem' }}>
-                            <img src={imageEncoded} alt="アップロードされた画像" style={{ width: '100%', maxHeight: '400px', objectFit: 'cover' }} />
+                            <img src={imageEncoded} alt="アップロードされた画像" style={{ width: '100%', maxHeight: '400px', objectFit: 'cover', marginBottom: '1rem' }} />
                         </div>
                     )}
                     <Textarea
@@ -208,7 +234,7 @@ export default function Event() {
                                 height: '150px', // 高さを設定
                             }}
                         />
-                        {imageEncoded && <img src={imageEncoded} alt="入力画像" className="input-image" />}
+                        {imageEncoded && <img src={imageEncoded} alt="入力画像" className="input-image pb-10" />}
                         <div className="speech-bubble vertical-text haiku-left">
                             <h3 className="haiku-text">
                                 {haiku

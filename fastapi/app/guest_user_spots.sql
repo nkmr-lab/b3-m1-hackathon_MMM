@@ -1,4 +1,4 @@
--- スポット
+-- スポット (spotsが39件じゃないとエラー)
 INSERT INTO users (uid, name, email) VALUES ('guest', 'ゲスト', 'guest@unknown.com');
 INSERT INTO user_spots (user_uid, spot_id, is_achieved) VALUES ('guest', 1, 0);
 INSERT INTO user_spots (user_uid, spot_id, is_achieved) VALUES ('guest', 2, 0);
