@@ -12,7 +12,7 @@ const Header = () => {
         <div className="px-4 py-3">
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-4">
-              <Link href={`${basePath}/`} passHref>
+              <Link href={"/"} passHref>
                 <div className="flex items-center space-x-2 cursor-pointer">
                   <span className="text-sm font-semibold text-gray-200">
                     ナカノ DE ハイク
