@@ -2,6 +2,8 @@
 import React, { useState, useEffect } from 'react';
 import { apiRoot } from "../../utils/foundation";
 import { useAuth } from '../../context/AuthContext';
+import Image from 'next/image';
+import { basePath } from '../../utils/foundation';
 
 /**
  * このコンポーネントは投稿一覧ページを表示します。。
@@ -21,7 +23,7 @@ export default function Feed() {
     console.log(user?.uid)
     const fetchPosts = async () => {
       try {
-        const response = await fetch(apiRoot+'/haiku-posts?user_uid='+user?.uid||"guest");
+        const response = await fetch(apiRoot + '/haiku-posts?user_uid=' + user?.uid || "guest");
         if (!response.ok) {
           throw new Error('Network response was not ok');
         }
@@ -39,28 +41,37 @@ export default function Feed() {
   const cardHeight = '150px';
 
   return (
-    <div
-      style={{
-        display: 'flex',
-        justifyContent: 'center', // 中央揃え
-        padding: '1rem',
-      }}
-    >
+    posts && posts.length > 0 ? (
       <div
         style={{
           display: 'flex',
-          flexDirection: 'column',
-          gap: '1rem',
+          justifyContent: 'center', // 中央揃え
           padding: '1rem',
-          maxWidth: '800px', // 任意の最大幅を設定
-          width: '100%',
         }}
       >
-        {posts.map((post, index) => (
-          <HoverCard key={index} post={post} cardWidth={cardWidth} cardHeight={cardHeight} />
-        ))}
+        <div
+          style={{
+            display: 'flex',
+            flexDirection: 'column',
+            gap: '1rem',
+            padding: '1rem',
+            maxWidth: '800px', // 任意の最大幅を設定
+            width: '100%',
+          }}
+        >
+          {posts.map((post, index) => (
+            <HoverCard key={index} post={post} cardWidth={cardWidth} cardHeight={cardHeight} />
+          ))}
+        </div>
       </div>
-    </div>
+    ) : (
+      <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '80vh', textAlign: 'center', paddingTop: '2rem' }}>
+        <Image src={`${basePath}/icons/character-level01.jpg`} alt="キャラクター" width={200} height={200} style={{ marginLeft: '1rem' }} />
+        <span style={{ fontSize: '1.5rem', writingMode: 'vertical-rl', textOrientation: 'upright', marginLeft: '1rem' }}>
+          まずは「詠む」ページから、写真を送ってね！
+        </span>
+      </div>
+    )
   );
 }
 
