@@ -1,7 +1,7 @@
-import { BotMessageSquare } from 'lucide-react';
 import signInWithGoogle, { signOutUser } from '../utils/auth';
 import { useAuth } from '../context/AuthContext';
 import { basePath } from '../utils/foundation';
+import Link from 'next/link';
 
 const Header = () => {
   const { user } = useAuth();
@@ -12,15 +12,13 @@ const Header = () => {
         <div className="px-4 py-3">
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-4">
-              <div
-                className="flex items-center space-x-2 cursor-pointer"
-                onClick={() => window.location.href = '/'}
-              >
-                <BotMessageSquare className="text-gray-200" size={30} />
-                <span className="text-sm font-semibold text-gray-200">
-                  ナカノ DE ハイク
-                </span>
-              </div>
+              <Link href={`${basePath}/`} passHref>
+                <div className="flex items-center space-x-2 cursor-pointer">
+                  <span className="text-sm font-semibold text-gray-200">
+                    ナカノ DE ハイク
+                  </span>
+                </div>
+              </Link>
             </div>
             <div className="flex items-center space-x-4">
               {user ? (
