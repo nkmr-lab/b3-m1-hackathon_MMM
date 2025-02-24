@@ -97,7 +97,6 @@ function HoverCard({
   cardHeight: string;
 }) {
   const [hovered, setHovered] = useState(false);
-  const lines = post.haiku.split(',');
   const reversed_lines = post.haiku.split(',').reverse(); // なぜか表示が逆になるので逆転させる
 
   return (
