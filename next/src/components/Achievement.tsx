@@ -1,6 +1,7 @@
 import React, { useEffect, useState, Suspense } from "react";
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
+import { Table, TableBody, TableCell, TableHeader, TableRow } from '@/components/ui/table';
 import { useAuth } from '../context/AuthContext';
+import { apiRoot } from "../utils/foundation";
 
 type Spot = {
     id: number;
@@ -18,7 +19,7 @@ const Spots: React.FC = () => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const res = await fetch(`http://localhost:8080/spots-with-achievement?user_uid=${user?.uid ?? "guest"}`);
+                const res = await fetch(`${apiRoot}/spots-with-achievement?user_uid=${user?.uid ?? "guest"}`);
                 if (!res.ok) {
                     throw new Error("データの取得に失敗しました");
                 }

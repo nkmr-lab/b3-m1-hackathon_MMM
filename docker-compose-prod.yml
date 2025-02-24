@@ -35,6 +35,8 @@ services:
       - ./mysql/.env
     volumes:
       - mmm_mysql_prod:/var/lib/mysql
+    networks:
+      - mmm_network
 
   phpmyadmin:
     container_name: mmm-dbconsole

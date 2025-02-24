@@ -2,16 +2,32 @@ import time
 from sqlalchemy import create_engine, text
 from sqlalchemy.exc import OperationalError
 from sqlalchemy.orm import sessionmaker, Session
-import os
 from db import Base  # ORM定義
 from routers.mar import Base as MarBase
 from routers.kaiji import Base as KaijiBase
 from routers.micchi import Base as MicchiBase
 from routers.micchi import Spot
-import json
+import json, os
+from dotenv import load_dotenv
+load_dotenv()
+
+from log_conf import logger
 
 # DB接続情報
-DB_URL = os.getenv("DATABASE_URL", "mysql+pymysql://root@db:3306/mmm_db?charset=utf8")
+MYSQL_USER = os.getenv("MYSQL_USER")
+MYSQL_PASSWORD = os.getenv("MYSQL_PASSWORD")
+MYSQL_HOST = os.getenv("MYSQL_HOST")
+MYSQL_DATABASE = os.getenv("MYSQL_DATABASE")
+
+
+PROD_DB_URL = f"mysql+pymysql://{MYSQL_USER}:{MYSQL_PASSWORD}@{MYSQL_HOST}/{MYSQL_DATABASE}?charset=utf8"
+DEV_DB_URL = "mysql+pymysql://root@db:3306/mmm_db?charset=utf8"
+
+DB_URL = PROD_DB_URL if os.getenv("ENV") == "production" else DEV_DB_URL
+
+logger.info(f"DB_URL: {DB_URL}")
+logger.info(f"ENV: {os.getenv('ENV')}")
+
 engine = create_engine(DB_URL, echo=True)
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 

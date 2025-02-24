@@ -40,7 +40,7 @@ services:
       MYSQL_DATABASE: "mmm_db"
       TZ: "Asia/Tokyo"
     volumes:
-      - mmm_mysql-2:/var/lib/mysql2
+      - mmm_mysql:/var/lib/mysql
 
   phpmyadmin:
     container_name: mmm-dbconsole
@@ -50,4 +50,4 @@ services:
   
 volumes:
   mmm_node_modules:
-  mmm_mysql-2:
+  mmm_mysql:

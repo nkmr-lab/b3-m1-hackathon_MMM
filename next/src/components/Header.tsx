@@ -1,11 +1,9 @@
-import React, { useState } from 'react';
 import { BotMessageSquare } from 'lucide-react';
 import signInWithGoogle, { signOutUser } from '../utils/auth';
 import { useAuth } from '../context/AuthContext';
 
 const Header = () => {
   const { user } = useAuth();
-  const [activeIndex, setActiveIndex] = useState(0);
 
   return (
     <>

@@ -1,6 +1,7 @@
 import { GoogleAuthProvider, signInWithPopup, signOut } from "firebase/auth";
 import { auth } from "./firebase"; // Firebase を初期化したファイルからインポート
 import { toast } from "react-hot-toast";
+import { apiRoot } from "../utils/foundation";
 
 // Googleでログインする関数
 const signInWithGoogle = async () => {
@@ -11,7 +12,7 @@ const signInWithGoogle = async () => {
         // Googleユーザー情報を取得
         const user = result.user;
         try {
-            const response = await fetch("http://localhost:8080/create-user", {
+            const response = await fetch(apiRoot+"/create-user", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
