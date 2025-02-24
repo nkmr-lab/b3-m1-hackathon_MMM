@@ -19,7 +19,6 @@ MYSQL_PASSWORD = os.getenv("MYSQL_PASSWORD")
 MYSQL_HOST = os.getenv("MYSQL_HOST")
 MYSQL_DATABASE = os.getenv("MYSQL_DATABASE")
 
-
 PROD_DB_URL = f"mysql+pymysql://{MYSQL_USER}:{MYSQL_PASSWORD}@{MYSQL_HOST}/{MYSQL_DATABASE}?charset=utf8"
 DEV_DB_URL = "mysql+pymysql://root@db:3306/mmm_db?charset=utf8"
 
