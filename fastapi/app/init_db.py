@@ -80,7 +80,7 @@ def initialize_database():
         print("🔄 Dropping and recreating tables...")
         # Base.metadata.drop_all(bind=engine)  # テーブル削除
         Base.metadata.create_all(bind=engine)  # テーブル作成
-        print("✅ Database schema reset.")
+        print("✅ Database schema initialized (not necessarily meaning they're dropped).")
 
         # 初期データを挿入
         print("📥 Inserting initial data from data.json...")

@@ -8,6 +8,7 @@ import { useAuth } from '../../context/AuthContext';
 import { Button } from '../../components/ui/button';
 import { Textarea } from '../../components/ui/textarea';
 import { apiRoot } from "../../utils/foundation";
+import { basePath } from "../../utils/foundation";
 
 /**
  * このコンポーネントはイベント紹介ページを表示します。
@@ -24,7 +25,7 @@ interface ExifData {
 
 export default function Event() {
     const [haiku, setHaiku] = useState("");
-    const [imageEncoded, setimageEncoded] = useState<string | null>(null);
+    const [imageEncoded, setImageEncoded] = useState<string | null>(null);
     const [exifData, setExifData] = useState<ExifData | null>(null);
     const [gpsData, setGpsData] = useState<{ latitude: number | null, longitude: number | null }>({ latitude: null, longitude: null });
     const [text, setText] = useState(""); // ユーザー入力用のテキスト
@@ -32,13 +33,50 @@ export default function Event() {
     const [isLoading, setIsLoading] = useState(false);
     const { user } = useAuth();
 
+    /**
+     * 画像をリサイズしてData URLとして返す関数
+     * @param dataUrl 読み込んだ画像のData URL
+     * @param fileSize 元のファイルサイズ（バイト）
+     * @param maxSize 最大ピクセル数
+     */
+    const resizeImage = (dataUrl: string, fileSize: number, maxSize: number): Promise<string> => {
+        return new Promise((resolve) => {
+            const img = new Image();
+            img.src = dataUrl;
+
+            img.onload = () => {
+                const canvas = document.createElement('canvas');
+                const scale = Math.min(maxSize / img.width, maxSize / img.height);
+
+                canvas.width = img.width * scale;
+                canvas.height = img.height * scale;
+
+                const ctx = canvas.getContext('2d');
+                if (ctx) {
+                    ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+
+                    // 圧縮率を動的に計算
+                    const compressionQuality = fileSize > 1000000 
+                        ? Math.max(1000000 / fileSize, 0.5) // 1MB超の場合は動的に圧縮率を設定、最低でも50%に制限
+                        : 1.0; // 1MB以下の場合は圧縮しない
+
+                    resolve(canvas.toDataURL('image/jpeg', compressionQuality));
+                }
+            };
+        });
+    };
+
     const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const file = event.target.files?.[0];
         if (file) {
             const reader = new FileReader();
 
-            reader.onloadend = () => { // getDataのコールバック内で呼ぶと動作タイミングが不安定になる
-                setimageEncoded(reader.result as string);
+            reader.onloadend = () => {
+                if (reader.result) {
+                    resizeImage(reader.result as string, file.size, 1024).then((resizedDataUrl) => {
+                        setImageEncoded(resizedDataUrl);
+                    });
+                }
             };
 
             // EXIF情報を取得
@@ -84,14 +122,14 @@ export default function Event() {
                     setGpsData({ latitude, longitude });
                 } else {
                     setGpsData({ latitude: null, longitude: null });
-                    setimageEncoded(null);
+                    setImageEncoded(null);
                     setExifData(null);
                     toast.error('画像のGPS情報が見つかりませんでした');
                 }
             });
             reader.readAsDataURL(file);
         } else {
-            setimageEncoded(null);
+            setImageEncoded(null);
             setExifData(null);
             setGpsData({ latitude: null, longitude: null });
             toast.error('画像の読み込みに失敗しました');
@@ -161,15 +199,15 @@ export default function Event() {
         switch (quality) {
             case 1:
                 console.log("Haiku Level 1 generated");
-                return "/icons/character-level01.jpg"; // 小学生向け
+                return `${basePath}/icons/character-level01.jpg`; // 小学生向け
             case 2:
                 console.log("Haiku Level 2 generated");
-                return "/icons/character-level01.jpg"; // 成人向け
+                return `${basePath}/icons/character-level01.jpg`; // 成人向け
             case 3:
                 console.log("Haiku Level 3 generated");
-                return "/icons/character-level01.jpg"; // 詩人向け
+                return `${basePath}/icons/character-level01.jpg`; // 詩人向け
             default:
-                return "/icons/character-level01.jpg"; // デフォルト
+                return `${basePath}/icons/character-level01.jpg`; // デフォルト
         }
     };
 
