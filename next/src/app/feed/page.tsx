@@ -19,15 +19,17 @@ export default function Feed() {
   const { user } = useAuth();
   const [posts, setPosts] = useState<Post[]>([]);
   useEffect(() => {
-    console.log(user?.uid)
+    console.log(user?.uid||"guest");
+    const user_uid = user?.uid || "guest"
     const fetchPosts = async () => {
       try {
-        const response = await fetch(apiRoot + '/haiku-posts?user_uid=' + user?.uid || "guest");
+        const response = await fetch(apiRoot + '/haiku-posts?user_uid=' + user_uid);
         if (!response.ok) {
           throw new Error('Network response was not ok');
         }
         const data = await response.json();
         setPosts(data);
+        console.log(data)
       } catch (error) {
         console.error('Failed to fetch posts:', error);
       }
@@ -96,6 +98,7 @@ function HoverCard({
 }) {
   const [hovered, setHovered] = useState(false);
   const lines = post.haiku.split(',');
+  const reversed_lines = post.haiku.split(',').reverse(); // なぜか表示が逆になるので逆転させる
 
   return (
     <div
@@ -146,28 +149,19 @@ function HoverCard({
           backgroundColor: '#e0f7fa',
         }}
       >
-        {lines.map((line, index) => {
-          // 各句ごとに揃え方を指定
-          let alignSelf: 'flex-start' | 'center' | 'flex-end' = 'center';
-          if (index === 0) {
-            alignSelf = 'flex-end';
-          } else if (index === 2) {
-            alignSelf = 'flex-start';
-          }
-          return (
-            <div
-              key={index}
-              style={{
-                writingMode: 'vertical-rl',
-                textOrientation: 'upright',
-                margin: '0 4px',
-                alignSelf: alignSelf,
-              }}
-            >
-              {line}
-            </div>
-          );
-        })}
+        {reversed_lines.map((line, index) => (
+          <div
+            key={index}
+            style={{
+              writingMode: 'vertical-rl',
+              textOrientation: 'upright',
+              margin: '0 4px',
+              alignSelf: index === 0 ? 'flex-end' : index === 1 ? 'center' : 'flex-start',
+            }}
+          >
+            {line}
+          </div>
+        ))}
       </div>
     </div>
   );

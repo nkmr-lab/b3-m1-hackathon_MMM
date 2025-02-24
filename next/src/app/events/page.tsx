@@ -56,7 +56,7 @@ export default function Event() {
                     ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
 
                     // 圧縮率を動的に計算
-                    const compressionQuality = fileSize > 1000000 
+                    const compressionQuality = fileSize > 1000000
                         ? Math.max(1000000 / fileSize, 0.5) // 1MB超の場合は動的に圧縮率を設定、最低でも50%に制限
                         : 1.0; // 1MB以下の場合は圧縮しない
 
@@ -151,7 +151,7 @@ export default function Event() {
         setIsLoading(true);
 
         const fetchHaiku = async () => {
-            const response = await fetch(apiRoot+"/haiku", {
+            const response = await fetch(apiRoot + "/haiku", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -227,7 +227,7 @@ export default function Event() {
                             📷 画像をアップロード
                         </Button>
                     </div>
-                    {imageEncoded  && gpsData && (
+                    {imageEncoded && gpsData && (
                         <div style={{ marginTop: '1rem' }}>
                             <img src={imageEncoded} alt="アップロードされた画像" style={{ width: '100%', maxHeight: '400px', objectFit: 'cover', marginBottom: '1rem' }} />
                         </div>
@@ -288,7 +288,11 @@ export default function Event() {
                     </div>
                 </div>
             ) : (
-                <p className="message">画像と感想を入力した後、送信してください</p>
+                <>
+                    <p className="message">写真と感想を入力した後、送信してください</p>
+                    <p className="message"><span className="text-red-500">写真は必ず「写真ライブラリ」から選択し、カメラは起動しないでください。</span></p>
+                </>
+
             )}
             <style jsx>{`
     @keyframes moveLeftRight {
