@@ -6,7 +6,14 @@ import { basePath } from '../utils/foundation';
 export default function Home() {
   return (
     <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '80vh', textAlign: 'center', paddingTop: '2rem' }}>
-      <Image src={`${basePath}/icons/character-level01.jpg`} alt="キャラクター" width={200} height={200} style={{ marginLeft: '1rem' }} />
+      <img
+        src={`${basePath}/icons/character-level01.jpg`}
+        alt="キャラクター"
+        style={{
+          width: '200px', // 幅を設定
+          height: '200px', // 高さを設定
+        }}
+      />
       <span style={{ fontSize: '1.5rem', writingMode: 'vertical-rl', textOrientation: 'upright', marginLeft: '1rem' }}>
         あたちとまちをめぐって、いろんなスポットをおちえてね！
       </span>
