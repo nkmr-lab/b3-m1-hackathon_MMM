@@ -79,7 +79,7 @@ def initialize_database():
     """データベースをリセットし、初期データを挿入"""
     if wait_for_db_connection():
         print("🔄 Dropping and recreating tables...")
-        Base.metadata.drop_all(bind=engine)  # テーブル削除
+        # Base.metadata.drop_all(bind=engine)  # テーブル削除
         Base.metadata.create_all(bind=engine)  # テーブル作成
         print("✅ Database schema reset.")
 

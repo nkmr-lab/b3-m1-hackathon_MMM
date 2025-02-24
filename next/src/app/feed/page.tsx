@@ -1,6 +1,7 @@
 "use client";
 import React, { useState, useEffect } from 'react';
 import { apiRoot } from "../../utils/foundation";
+import { useAuth } from '../../context/AuthContext';
 
 /**
  * このコンポーネントは投稿一覧ページを表示します。。
@@ -14,11 +15,13 @@ interface Post {
 }
 
 export default function Feed() {
+  const { user } = useAuth();
   const [posts, setPosts] = useState<Post[]>([]);
   useEffect(() => {
+    console.log(user?.uid)
     const fetchPosts = async () => {
       try {
-        const response = await fetch(apiRoot+'/haiku-posts');
+        const response = await fetch(apiRoot+'/haiku-posts?user_uid='+user?.uid||"guest");
         if (!response.ok) {
           throw new Error('Network response was not ok');
         }
@@ -30,7 +33,7 @@ export default function Feed() {
     };
 
     fetchPosts();
-  }, []);
+  }, [user]);
 
   const cardWidth = '350px';
   const cardHeight = '150px';

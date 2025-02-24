@@ -1,4 +1,5 @@
 import React from 'react';
+import Link from 'next/link';
 import { FaRunning, FaEye, FaFeatherAlt } from 'react-icons/fa';
 
 const Footer = () => {
@@ -7,31 +8,22 @@ const Footer = () => {
       <div className="px-4 py-3">
         <div className="flex items-center justify-center space-x-8">
           <div className="flex flex-col items-center">
-            <button
-              className="flex flex-col items-center text-xs text-gray-200"
-              onClick={() => window.location.href = '/create-post'}
-            >
+            <Link href="/create-post" className="flex flex-col items-center text-xs text-gray-200">
               <FaRunning className="text-gray-200 mb-1" />
               実績
-            </button>
+            </Link>
           </div>
           <div className="flex flex-col items-center">
-            <button
-              className="flex flex-col items-center text-xs text-gray-200"
-              onClick={() => window.location.href = '/feed'}
-            >
+            <Link href="/feed" className="flex flex-col items-center text-xs text-gray-200">
               <FaEye className="text-gray-200 mb-1" />
               見る
-            </button>
+            </Link>
           </div>
           <div className="flex flex-col items-center">
-            <button
-              className="flex flex-col items-center text-xs text-gray-200"
-              onClick={() => window.location.href = '/events'}
-            >
+            <Link href="/events" className="flex flex-col items-center text-xs text-gray-200">
               <FaFeatherAlt className="text-gray-200 mb-1" />
               詠む
-            </button>
+            </Link>
           </div>
         </div>
       </div>

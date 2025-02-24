@@ -1,6 +1,7 @@
 import { BotMessageSquare } from 'lucide-react';
 import signInWithGoogle, { signOutUser } from '../utils/auth';
 import { useAuth } from '../context/AuthContext';
+import { basePath } from '../utils/foundation';
 
 const Header = () => {
   const { user } = useAuth();
@@ -38,7 +39,7 @@ const Header = () => {
                 style={{ border: 'none', background: 'none', padding: 0, cursor: 'pointer' }}
               >
                 <img
-                  src={user?.photoURL || '/icons/google.png'}
+                  src={user?.photoURL || `${basePath}/icons/google.png`}
                   alt={`${user?.displayName || 'ユーザー'}のプロフィール`}
                   style={{ borderRadius: '50%', width: '30px', height: '30px' }}
                 />

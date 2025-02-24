@@ -261,8 +261,8 @@ async def generate_haiku(base64_image: str, comment: str, quality: int):
         raise Exception(f"Error generating haiku: {str(e)}")
     
 @router.get("/haiku-posts")
-async def read_haiku_post(db: AsyncSession = Depends(get_db)):
-    result = await db.execute(select(Post))
+async def read_haiku_post(user_uid:str, db: AsyncSession = Depends(get_db)):
+    result = await db.execute(select(Post).filter_by(user_uid=user_uid))
     db_posts = result.scalars().all()
     # 必要なフィールドだけを抽出
     posts = [{"img_file_name": post.img_file_name, "haiku": post.haiku} for post in db_posts]
