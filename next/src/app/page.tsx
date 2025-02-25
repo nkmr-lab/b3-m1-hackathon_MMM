@@ -14,14 +14,17 @@ export default function Home() {
         }}
       />
       <span style={{ fontSize: '1.5rem', writingMode: 'vertical-rl', textOrientation: 'upright', marginLeft: '1rem' }}>
-        ナカノをめぐって、いろんなスポットをおしえてね！
+        ナカノのいろんなスポットをめぐろう！
       </span>
       <h1 style={{ fontSize: '2.5rem', fontWeight: 'bold', writingMode: 'vertical-rl', textOrientation: 'upright' }}>
-        ようこそ、ナカノ
+        ナカノ
         <span style={{ writingMode: 'horizontal-tb', textOrientation: 'sideways' }}>
           DE
         </span>
         ハイクへ！
+      </h1>
+      <h1 style={{ fontSize: '2.5rem', fontWeight: 'bold', writingMode: 'vertical-rl', textOrientation: 'upright' }}>
+        ようこそ、
       </h1>
     </div>
   );

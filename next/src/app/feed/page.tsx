@@ -18,6 +18,7 @@ interface Post {
 export default function Feed() {
   const { user } = useAuth();
   const [posts, setPosts] = useState<Post[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
   useEffect(() => {
     console.log(user?.uid||"guest");
     const user_uid = user?.uid || "guest"
@@ -30,6 +31,7 @@ export default function Feed() {
         const data = await response.json();
         setPosts(data);
         console.log(data)
+        setIsLoading(false);
       } catch (error) {
         console.error('Failed to fetch posts:', error);
       }
@@ -66,7 +68,8 @@ export default function Feed() {
         </div>
       </div>
     ) : (
-      <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '80vh', textAlign: 'center', paddingTop: '2rem' }}>
+      !isLoading ? (
+        <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '80vh', textAlign: 'center', paddingTop: '2rem' }}>
         <img
           src={`${basePath}/icons/character-level01.jpg`}
           alt="キャラクター"
@@ -79,6 +82,9 @@ export default function Feed() {
           まずは「詠む」ページから、写真を送ってね！
         </span>
       </div>
+      ) : (
+        <></>
+      )
     )
   );
 }
