@@ -43,18 +43,31 @@ const Spots: React.FC = () => {
                     <TableRow
                         style = {{backgroundColor: 'rgba(0, 0, 0, 0.1)'}}
                     >
+                        <TableCell>スポット画像</TableCell>
                         <TableCell>スポットの名称</TableCell>
                     </TableRow>
                 </TableHeader>
                 <TableBody>
-                    {spots.map((spot, index) => (
+                    {spots.map((spot, index) => {
+                    const imagePath = `/icons/${spot.name}.png`;
+
+                    return(
                         <TableRow
                             key={index} // インデックスをkeyとして使用
                             style={{ backgroundColor: spot.is_achieved ? 'rgba(0, 0, 255, 0.5)' : 'inherit' }}
                         >
+                            <TableCell>
+                                    <img
+                                        src={imagePath}
+                                        alt={spot.name}
+                                        onError={(e) => e.currentTarget.src = "/icons/default.png"} // 画像がない場合はデフォルト画像を表示
+                                        style={{ width: "50px", height: "50px", objectFit: "cover", borderRadius: "5px" }}
+                                    />
+                                </TableCell>
                             <TableCell>{spot.name}</TableCell>
                         </TableRow>
-                    ))}
+                    );
+                    })}
                 </TableBody>
             </Table>
         </div>
