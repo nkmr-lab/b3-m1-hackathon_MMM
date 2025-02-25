@@ -2,6 +2,7 @@ import React, { useEffect, useState, Suspense } from "react";
 import { Table, TableBody, TableCell, TableHeader, TableRow } from '@/components/ui/table';
 import { useAuth } from '../context/AuthContext';
 import { apiRoot } from "../utils/foundation";
+import { basePath } from '../utils/foundation';
 
 type Spot = {
     id: number;
@@ -49,7 +50,7 @@ const Spots: React.FC = () => {
                 </TableHeader>
                 <TableBody>
                     {spots.map((spot, index) => {
-                    const imagePath = `/icons/${spot.name}.png`;
+                    const imagePath = `${basePath}/icons/${spot.name}.png`;
 
                     return(
                         <TableRow
