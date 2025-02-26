@@ -2,7 +2,6 @@ import React, { useEffect, useState, Suspense } from "react";
 import { Table, TableBody, TableCell, TableHeader, TableRow } from '@/components/ui/table';
 import { useAuth } from '../context/AuthContext';
 import { apiRoot } from "../utils/foundation";
-import { basePath } from '../utils/foundation';
 import Image from 'next/image';
 
 type Spot = {
