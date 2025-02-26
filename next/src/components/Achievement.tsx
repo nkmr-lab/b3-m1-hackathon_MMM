@@ -51,7 +51,7 @@ const Spots: React.FC = () => {
                 </TableHeader>
                 <TableBody>
                     {spots.map((spot, index) => {
-                        const imagePath = `${basePath}/icons/${spot.name}.png`;
+                        const imagePath = `/icons/${spot.name}.png`;
 
                         return (
                             <TableRow
