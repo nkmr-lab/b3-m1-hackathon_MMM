@@ -3,6 +3,7 @@ import { Table, TableBody, TableCell, TableHeader, TableRow } from '@/components
 import { useAuth } from '../context/AuthContext';
 import { apiRoot } from "../utils/foundation";
 import { basePath } from '../utils/foundation';
+import Image from 'next/image';
 
 type Spot = {
     id: number;
@@ -42,7 +43,7 @@ const Spots: React.FC = () => {
             <Table>
                 <TableHeader>
                     <TableRow
-                        style = {{backgroundColor: 'rgba(0, 0, 0, 0.1)'}}
+                        style={{ backgroundColor: 'rgba(0, 0, 0, 0.1)' }}
                     >
                         <TableCell>スポット画像</TableCell>
                         <TableCell>スポットの名称</TableCell>
@@ -50,24 +51,27 @@ const Spots: React.FC = () => {
                 </TableHeader>
                 <TableBody>
                     {spots.map((spot, index) => {
-                    const imagePath = `${basePath}/icons/${spot.name}.png`;
+                        const imagePath = `${basePath}/icons/${spot.name}.png`;
 
-                    return(
-                        <TableRow
-                            key={index} // インデックスをkeyとして使用
-                            style={{ backgroundColor: spot.is_achieved ? 'rgba(0, 0, 255, 0.5)' : 'inherit' }}
-                        >
-                            <TableCell>
-                                    <img
+                        return (
+                            <TableRow
+                                key={index} // インデックスをkeyとして使用
+                                style={{ backgroundColor: spot.is_achieved ? 'rgba(0, 0, 255, 0.5)' : 'inherit' }}
+                            >
+                                <TableCell>
+                                    <Image
                                         src={imagePath}
                                         alt={spot.name}
-                                        onError={(e) => e.currentTarget.src = "/icons/default.png"} // 画像がない場合はデフォルト画像を表示
-                                        style={{ width: "50px", height: "50px", objectFit: "cover", borderRadius: "5px" }}
+                                        width={50}
+                                        height={50}
+                                        placeholder="blur"
+                                        blurDataURL={`${imagePath}?w=10&auto=format&blur=10`} // 低解像度版をURLパラメータで取得
+                                        style={{ objectFit: 'cover', borderRadius: '5px' }}
                                     />
                                 </TableCell>
-                            <TableCell>{spot.name}</TableCell>
-                        </TableRow>
-                    );
+                                <TableCell>{spot.name}</TableCell>
+                            </TableRow>
+                        );
                     })}
                 </TableBody>
             </Table>
