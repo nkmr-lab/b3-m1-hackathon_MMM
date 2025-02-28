@@ -5,6 +5,7 @@ import Image from 'next/image';
 
 const Header = () => {
   const { user } = useAuth();
+  const iconUrl = user?.photoURL || '/icons/google.png'
 
   return (
     <>
@@ -47,7 +48,7 @@ const Header = () => {
               >
                 <Image
                   unoptimized
-                  src={user?.photoURL || '/icons/google.png'}
+                  src={iconUrl}
                   alt={"icon"}
                   width={30}
                   height={30}
