@@ -2,6 +2,7 @@ import signInWithGoogle, { signOutUser } from '../utils/auth';
 import { useAuth } from '../context/AuthContext';
 import { basePath } from '../utils/foundation';
 import Link from 'next/link';
+import Image from 'next/image';
 
 const Header = () => {
   const { user } = useAuth();
@@ -24,7 +25,16 @@ const Header = () => {
               {user ? (
                 <span className="text-sm text-gray-200">ようこそ、{user.displayName}さん</span>
               ) : (
-                <span className="text-sm text-gray-200">Googleでログイン</span>
+                <span
+                  className="text-sm text-gray-200 cursor-pointer"
+                  onClick={() => {
+                    if (user) {
+                      signOutUser();
+                    } else {
+                      signInWithGoogle();
+                    }
+                  }}>Googleでログイン
+                  </span>
               )}
               <button
                 onClick={() => {
@@ -36,10 +46,13 @@ const Header = () => {
                 }}
                 style={{ border: 'none', background: 'none', padding: 0, cursor: 'pointer' }}
               >
-                <img
-                  src={user?.photoURL || `${basePath}/icons/google.png`}
+                <Image
+                  unoptimized
+                  src={user?.photoURL || '/icons/google.png'}
                   alt={`${user?.displayName || 'ユーザー'}のプロフィール`}
-                  style={{ borderRadius: '50%', width: '30px', height: '30px' }}
+                  width={30}
+                  height={30}
+                  style={{ borderRadius: '50%' }}
                 />
               </button>
             </div>

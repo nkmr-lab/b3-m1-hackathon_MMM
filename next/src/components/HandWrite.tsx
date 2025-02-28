@@ -111,7 +111,7 @@ const HandWrite: React.FC = () => {
       });
 
       if (response.ok) {
-        console.log('Image saved successfully');
+        // console.log('Image saved successfully');
       } else {
         console.error('Failed to save image');
       }

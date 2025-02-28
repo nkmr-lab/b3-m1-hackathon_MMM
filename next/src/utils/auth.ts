@@ -28,13 +28,13 @@ const signInWithGoogle = async () => {
                 const errorData = await response.json();
                 console.error("Failed to create user:", errorData);
             } else {
-                console.log("User created successfully");
+                // console.log("User created successfully");
             }
         } catch (error) {
             console.error("Error occurred while creating user:", error);
         }
         
-        console.log("Logged in as ", user.displayName, user.email, user.uid);
+        // console.log("Logged in as ", user.displayName, user.email, user.uid);
         toast.success("Logged in as " + user.displayName);
     } catch (error) {
         console.error("Error logging in with Google:", error);
@@ -48,7 +48,7 @@ export default signInWithGoogle;
 export const signOutUser = async () => {
     try {
         await signOut(auth);
-        console.log("User signed out");
+        // console.log("User signed out");
         toast.success("Signed out successfully");
     } catch (error) {
         console.error("Error signing out:", error);

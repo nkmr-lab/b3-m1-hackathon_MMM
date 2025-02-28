@@ -9,6 +9,7 @@ import { Button } from '../../components/ui/button';
 import { Textarea } from '../../components/ui/textarea';
 import { apiRoot } from "../../utils/foundation";
 import { basePath } from "../../utils/foundation";
+import Image from 'next/image';
 
 /**
  * このコンポーネントはイベント紹介ページを表示します。
@@ -41,7 +42,7 @@ export default function Event() {
      */
     const resizeImage = (dataUrl: string, fileSize: number, maxSize: number): Promise<string> => {
         return new Promise((resolve) => {
-            const img = new Image();
+            const img = new window.Image();
             img.src = dataUrl;
 
             img.onload = () => {
@@ -118,13 +119,13 @@ export default function Event() {
                         allExifData.GPSLongitudeRef
                     );
 
-                    console.log("緯度：" + latitude + ",経度：" + longitude);
+                    // console.log("緯度：" + latitude + ",経度：" + longitude);
                     setGpsData({ latitude, longitude });
                 } else {
                     setGpsData({ latitude: null, longitude: null });
                     // setImageEncoded(null);
                     setExifData(null);
-                    toast('画像のGPS情報が見つかりません',{
+                    toast('画像のGPS情報が見つかりません', {
                         icon: '🚨',
                     });
                 }
@@ -200,13 +201,13 @@ export default function Event() {
     const getCharacterImage = () => {
         switch (quality) {
             case 1:
-                console.log("Haiku Level 1 generated");
+                // console.log("Haiku Level 1 generated");
                 return `${basePath}/icons/character-level01.jpg`; // 小学生向け
             case 2:
-                console.log("Haiku Level 2 generated");
+                // console.log("Haiku Level 2 generated");
                 return `${basePath}/icons/character-level01.jpg`; // 成人向け
             case 3:
-                console.log("Haiku Level 3 generated");
+                // console.log("Haiku Level 3 generated");
                 return `${basePath}/icons/character-level01.jpg`; // 詩人向け
             default:
                 return `${basePath}/icons/character-level01.jpg`; // デフォルト
@@ -230,8 +231,13 @@ export default function Event() {
                         </Button>
                     </div>
                     {imageEncoded && gpsData && (
-                        <div style={{ marginTop: '1rem' }}>
-                            <img src={imageEncoded} alt="アップロードされた画像" style={{ width: '100%', maxHeight: '400px', objectFit: 'cover', marginBottom: '1rem' }} />
+                        <div style={{ position: 'relative', width: '100%', height: '400px', marginBottom: '1rem' }}>
+                            <Image
+                                src={imageEncoded}
+                                alt="アップロードされた画像"
+                                layout="fill"
+                                objectFit="cover"
+                            />
                         </div>
                     )}
                     <Textarea
@@ -252,29 +258,41 @@ export default function Event() {
 
             {/* 結果の表示 */}
             {isLoading ? (
-                <img
+                <Image
                     src={getCharacterImage()}
                     alt="キャラクター"
-                    className="character character-large character-right"
+                    width={200}
+                    height={200}
                     style={{
-                        animation: "moveLeftRight 2s infinite",
+                        position: 'absolute',
+                        bottom: 0,
+                        right: '25%',
+                        objectFit: 'cover',
+                        animation: 'moveLeftRight 2s infinite',
                     }}
                 />
             ) : haiku ? (
                 <div className="haiku-display">
                     <div className="haiku-content">
-                        <img
+                        <Image
                             src={getCharacterImage()}
                             alt="キャラクター"
+                            width={150}
+                            height={150}
                             style={{
                                 position: 'absolute',
                                 bottom: 0,
                                 right: 0,
-                                width: '150px', // 幅を設定
-                                height: '150px', // 高さを設定
                             }}
                         />
-                        {imageEncoded && <img src={imageEncoded} alt="入力画像" className="input-image pb-10" />}
+                        {imageEncoded && 
+                        <Image
+                            src={imageEncoded}
+                            alt="入力画像"
+                            className="input-image pb-10"
+                            width={600}
+                            height={400}
+                        />}
                         <div className="speech-bubble vertical-text haiku-left">
                             <h3 className="haiku-text">
                                 {haiku
@@ -302,7 +320,7 @@ export default function Event() {
             transform: translateX(0);
         }
         50% {
-            transform: translateX(20px);
+            transform: translateX(40px);
         }
         100% {
             transform: translateX(0);

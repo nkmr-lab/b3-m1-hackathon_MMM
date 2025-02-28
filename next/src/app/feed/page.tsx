@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { apiRoot } from "../../utils/foundation";
 import { useAuth } from '../../context/AuthContext';
 import { basePath } from '../../utils/foundation';
+import Image from 'next/image';
 
 /**
  * このコンポーネントは投稿一覧ページを表示します。。
@@ -20,7 +21,7 @@ export default function Feed() {
   const [posts, setPosts] = useState<Post[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   useEffect(() => {
-    console.log(user?.uid||"guest");
+    // console.log(user?.uid || "guest");
     const user_uid = user?.uid || "guest"
     const fetchPosts = async () => {
       try {
@@ -30,7 +31,7 @@ export default function Feed() {
         }
         const data = await response.json();
         setPosts(data);
-        console.log(data)
+        // console.log(data)
         setIsLoading(false);
       } catch (error) {
         console.error('Failed to fetch posts:', error);
@@ -68,22 +69,19 @@ export default function Feed() {
         </div>
       </div>
     ) : (
-      !isLoading ? (
+      !isLoading && (
         <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '80vh', textAlign: 'center', paddingTop: '2rem' }}>
-        <img
-          src={`${basePath}/icons/character-level01.jpg`}
-          alt="キャラクター"
-          style={{
-            width: '200px', // 幅を設定
-            height: '200px', // 高さを設定
-          }}
-        />
-        <span style={{ fontSize: '1.5rem', writingMode: 'vertical-rl', textOrientation: 'upright', marginLeft: '1rem' }}>
-          まずは「詠む」ページから、写真を送ってね！
-        </span>
-      </div>
-      ) : (
-        <></>
+          <Image
+            src={'/icons/character-level01.jpg'}
+            alt="キャラクター"
+            width={200}
+            height={200}
+            className="rounded-md object-cover"
+          />
+          <span style={{ fontSize: '1.5rem', writingMode: 'vertical-rl', textOrientation: 'upright', marginLeft: '1rem' }}>
+            まずは「詠む」ページから、写真を送ってね！
+          </span>
+        </div>
       )
     )
   );
@@ -131,14 +129,13 @@ function HoverCard({
           position: 'relative',
         }}
       >
-        <img
+        <Image
+          unoptimized
           src={apiRoot + "/image/" + post.img_file_name}
           alt="写真"
+          fill
           style={{
-            width: '100%',
-            height: '100%',
             objectFit: 'cover',
-            display: 'block',
           }}
         />
       </div>
