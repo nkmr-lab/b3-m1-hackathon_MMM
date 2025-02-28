@@ -48,7 +48,7 @@ const Header = () => {
                 <Image
                   unoptimized
                   src={user?.photoURL || '/icons/google.png'}
-                  alt={`${user?.displayName || 'ユーザー'}のプロフィール`}
+                  alt={"icon"}
                   width={30}
                   height={30}
                   style={{ borderRadius: '50%' }}
