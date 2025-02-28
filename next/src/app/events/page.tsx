@@ -139,9 +139,9 @@ export default function Event() {
     };
 
     const handleSubmit = async () => {
-        if (false){ //!exifData) {
-            toast.error('画像が選択されていません');
-            return;
+        if (exifData) {
+            // toast.error('画像が選択されていません');
+            // return;
         } else if (!text) {
             toast.error('コメントが入力されていません');
             return;
