@@ -2,7 +2,6 @@
 import React, { useState, useEffect } from 'react';
 import { apiRoot } from "../../utils/foundation";
 import { useAuth } from '../../context/AuthContext';
-import { basePath } from '../../utils/foundation';
 import Image from 'next/image';
 
 /**

@@ -1,5 +1,4 @@
 "use client";
-import { basePath } from '../utils/foundation';
 import Image from 'next/image';
 
 export default function Home() {

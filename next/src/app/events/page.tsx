@@ -8,7 +8,6 @@ import { useAuth } from '../../context/AuthContext';
 import { Button } from '../../components/ui/button';
 import { Textarea } from '../../components/ui/textarea';
 import { apiRoot } from "../../utils/foundation";
-import { basePath } from "../../utils/foundation";
 import Image from 'next/image';
 
 /**
@@ -202,15 +201,15 @@ export default function Event() {
         switch (quality) {
             case 1:
                 // console.log("Haiku Level 1 generated");
-                return `${basePath}/icons/character-level01.jpg`; // 小学生向け
+                return `/icons/character-level01.jpg`; // 小学生向け
             case 2:
                 // console.log("Haiku Level 2 generated");
-                return `${basePath}/icons/character-level01.jpg`; // 成人向け
+                return `/icons/character-level01.jpg`; // 成人向け
             case 3:
                 // console.log("Haiku Level 3 generated");
-                return `${basePath}/icons/character-level01.jpg`; // 詩人向け
+                return `/icons/character-level01.jpg`; // 詩人向け
             default:
-                return `${basePath}/icons/character-level01.jpg`; // デフォルト
+                return `/icons/character-level01.jpg`; // デフォルト
         }
     };
 

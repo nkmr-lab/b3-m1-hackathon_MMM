@@ -1,6 +1,5 @@
 import signInWithGoogle, { signOutUser } from '../utils/auth';
 import { useAuth } from '../context/AuthContext';
-import { basePath } from '../utils/foundation';
 import Link from 'next/link';
 import Image from 'next/image';
 
