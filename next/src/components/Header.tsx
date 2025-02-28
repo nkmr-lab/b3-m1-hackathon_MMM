@@ -1,6 +1,6 @@
 import signInWithGoogle, { signOutUser } from '../utils/auth';
 import { useAuth } from '../context/AuthContext';
-import Image from 'next/image';
+import { basePath } from '../utils/foundation';
 import Link from 'next/link';
 
 const Header = () => {
@@ -22,42 +22,37 @@ const Header = () => {
             </div>
             <div className="flex items-center space-x-4">
               {user ? (
-                <>
-                  <span className="text-sm text-gray-200">ようこそ、{user.displayName}さん</span>
-                  <button
-                    onClick={() => {
-                      if (user) {
-                        signOutUser();
-                      } else {
-                        signInWithGoogle();
-                      }
-                    }}
-                    style={{ border: 'none', background: 'none', padding: 0, cursor: 'pointer' }}
-                  >
-                    <Image
-                      src={user!.photoURL!}
-                      alt={"icon"}
-                      width={30}
-                      height={30}
-                      className="rounded-full"
-                    />
-                  </button>
-                </>
+                <span className="text-sm text-gray-200">ようこそ、{user.displayName}さん</span>
               ) : (
-                <button
-                    onClick={() => {
-                      if (user) {
-                        signOutUser();
-                      } else {
-                        signInWithGoogle();
-                      }
-                    }}
-                    style={{ border: 'none', background: 'none', padding: 0, cursor: 'pointer' }}
-                  >
-                    <span className="text-sm text-gray-200">Googleでログイン</span>
-                  </button>
+                <span
+                  onClick={() => {
+                    if (user) {
+                      signOutUser();
+                    } else {
+                      signInWithGoogle();
+                    }
+                  }}
+                  className="text-sm text-gray-200 cursor-pointer px-3 py-2 rounded transition duration-200 ease-in-out hover:bg-gray-700 hover:text-white hover:scale-105"
+                >
+                  Googleでログイン
+                </span>
               )}
-
+              <button
+                onClick={() => {
+                  if (user) {
+                    signOutUser();
+                  } else {
+                    signInWithGoogle();
+                  }
+                }}
+                style={{ border: 'none', background: 'none', padding: 0, cursor: 'pointer' }}
+              >
+                <img
+                  src={user?.photoURL || `${basePath}/icons/google.png`}
+                  alt={"プロフ"}
+                  style={{ borderRadius: '50%', width: '30px', height: '30px' }}
+                />
+              </button>
             </div>
           </div>
         </div>
