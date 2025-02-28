@@ -21,6 +21,8 @@ services:
     environment:
       PYTHONPATH: /app
       ENV: production
+    volumes:
+      - mmm_images:/app/images
     networks:
       - mmm_network
 
@@ -48,6 +50,7 @@ services:
 
 volumes:
   mmm_mysql_prod:
+  mmm_images:
 
 networks:
   mmm_network:

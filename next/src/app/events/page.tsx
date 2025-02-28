@@ -122,14 +122,16 @@ export default function Event() {
                     setGpsData({ latitude, longitude });
                 } else {
                     setGpsData({ latitude: null, longitude: null });
-                    setImageEncoded(null);
+                    // setImageEncoded(null);
                     setExifData(null);
-                    toast.error('画像のGPS情報が見つかりませんでした');
+                    toast('画像のGPS情報が見つかりません',{
+                        icon: '🚨',
+                    });
                 }
             });
             reader.readAsDataURL(file);
         } else {
-            setImageEncoded(null);
+            // setImageEncoded(null);
             setExifData(null);
             setGpsData({ latitude: null, longitude: null });
             toast.error('画像の読み込みに失敗しました');
@@ -137,15 +139,15 @@ export default function Event() {
     };
 
     const handleSubmit = async () => {
-        if (!exifData) {
+        if (false){ //!exifData) {
             toast.error('画像が選択されていません');
             return;
         } else if (!text) {
             toast.error('コメントが入力されていません');
             return;
         } else if (gpsData.latitude === null || gpsData.longitude === null) {
-            toast.error('画像のGPS情報が見つかりませんでした');
-            return;
+            // toast.error('画像のGPS情報が見つかりません。');
+            // return;
         }
 
         setIsLoading(true);
@@ -158,8 +160,8 @@ export default function Event() {
                 },
                 body: JSON.stringify({
                     image_encoded: imageEncoded,
-                    gps_lat: gpsData.latitude ? parseFloat(gpsData.latitude.toFixed(6)) : null,
-                    gps_lon: gpsData.longitude ? parseFloat(gpsData.longitude.toFixed(6)) : null,
+                    gps_lat: gpsData.latitude ? parseFloat(gpsData.latitude.toFixed(6)) : 0,
+                    gps_lon: gpsData.longitude ? parseFloat(gpsData.longitude.toFixed(6)) : 0,
                     user_uid: user?.uid || "guest",
                     comment: text,
                 }),
