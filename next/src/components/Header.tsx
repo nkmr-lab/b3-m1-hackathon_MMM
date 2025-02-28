@@ -44,7 +44,18 @@ const Header = () => {
                   </button>
                 </>
               ) : (
-                <span className="text-sm text-gray-200">Googleでログイン</span>
+                <button
+                    onClick={() => {
+                      if (user) {
+                        signOutUser();
+                      } else {
+                        signInWithGoogle();
+                      }
+                    }}
+                    style={{ border: 'none', background: 'none', padding: 0, cursor: 'pointer' }}
+                  >
+                    <span className="text-sm text-gray-200">Googleでログイン</span>
+                  </button>
               )}
 
             </div>
