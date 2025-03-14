@@ -2,9 +2,9 @@
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-    basePath: process.env.NODE_ENV === 'production' ? '/nakano-de-haiku' : '',
+    basePath: process.env.NODE_ENV === 'production' ? '' : '',
     images: {
-        domains: ['localhost', 'vps4.nkmr.io'],
+        domains: ['localhost', 'haiku.nkmr.io'],
     },
 };
 
