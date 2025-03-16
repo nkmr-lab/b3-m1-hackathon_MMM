@@ -1,2 +1,2 @@
-export const apiRoot = process.env.NODE_ENV === 'production' ? 'https://vps4.nkmr.io/nakano-de-haiku/v1' : 'http://localhost:8080';
+export const apiRoot = process.env.NODE_ENV === 'production' ? 'https://haiku.nkmr.io/v1' : 'http://localhost:8080'; //本当は環境変数とかにするべきだね
 export const basePath = process.env.NODE_ENV === 'production' ? '/nakano-de-haiku' : '';
